@@ -17,7 +17,7 @@
     [:div
      [:h1 (:text state)] ;; Dereference the box; "open the box and give me the value"
      [:p "Counter: " (:counter state)]
-     [:button {:on-click (fn [e] (swap! app-state inc-counter))} "Click me!"]]))
+     [:button {:on-click (fn [e] (swap! app-state inc-counter)) :class "btn"} "Click me!"]]))
 
 (rum/mount (hello-world)
            (. js/document (getElementById "app"))) ;; Here's how you use JS's dot operator
