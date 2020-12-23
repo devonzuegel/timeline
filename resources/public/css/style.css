@@ -1,3 +1,9 @@
+.pre-wrap {
+  white-space: pre-wrap;
+}
+
+// -----------------------------
+
 /*!
  * @primer/css/core
  * http://primer.style/css
