@@ -35,4 +35,11 @@ To create a production build run:
     lein do clean, cljsbuild once min
 
 And open your browser in `resources/public/index.html`. You will not
-get live reloading, nor a REPL. 
+get live reloading, nor a REPL.
+
+## Things learned about Clojure while working on this project
+
+I'm a Clojure newbie, and I don't like getting stuck on the same things twice. For the sake of my future self (and anyone else who might benefit from reading this list), here's a list of things I learned the hard way while working on this project.
+
+- `for` is lazy, i.e. it only executes the values once you ask for them. `doseq` is like `for`, but it's not lazy.
+- To access variables in your repl that are defined within a file, you need to enter that namespace via `(ns timeline.core)`.
