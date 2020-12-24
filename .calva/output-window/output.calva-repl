@@ -15,79 +15,112 @@
 ;      when the cursor is after the last contents at the prompt
 ;   - Clojure lines in stack traces are peekable and clickable.
 clj::user=>
-\\
-\\
-clj::user=> (+ 1 1)
-2
-clj::user=> (in-ns 'timeline.core)
-#object[clojure.lang.Namespace 0x2dbb0d4e "timeline.core"]
-clj::timeline.core=>
-; Syntax error reading source at (REPL:24:1).
-; Invalid token: clj::timeline.core=>
-clj::timeline.core=> (in-ns 'timeline.utils)
-#object[clojure.lang.Namespace 0x566f5f7b "timeline.utils"]
-clj::timeline.utils=> (babys-first-macro "asdf")
-; Syntax error compiling at (output.calva-repl:29:22).
+(println 1)
+(println 1)
+1
+nil
+clj::user=>
+clj::user=>
+(println 1)
+1
+nil
+clj::user=>
+clj::user=>
+(babys-first-macro "asdf")
+; Syntax error compiling at (output.calva-repl:29:1).
 ; Unable to resolve symbol: babys-first-macro in this context
+clj::user=>
+clj::user=>
+(babys-first-macro "asdf")
+(babys-first-macro "asdf")
+(babys-first-macro "asdf")
+(babys-first-macro "asdf")
+(babys-first-macro "asdf")
+; Syntax error compiling at (output.calva-repl:38:1).
+; Unable to resolve symbol: babys-first-macro in this context
+clj::user=>
+clj::user=>
+1
+1
+clj::user=>
+clj::user=>
+1
+1
+clj::user=>
+clj::user=>
+1
+1
+clj::user=>
+clj::user=>
+1
+1
+clj::user=>
+1
+1
+clj::user=>x
+; Syntax error reading source at (REPL:60:1).
+; Invalid token: clj::user=>x
+clj::user=> x
+; Syntax error compiling at (output.calva-repl:1:1480).
+; Unable to resolve symbol: x in this context
+clj::user=> (in-ns 'timeline.utils)
+#object[clojure.lang.Namespace 0x328d02d1 "timeline.utils"]
+clj::timeline.utils=>x
+; Syntax error reading source at (REPL:68:1).
+; Invalid token: clj::timeline.utils=>x
+clj::timeline.utils=>
+clj::timeline.utils=>
+x
+; Syntax error compiling at (output.calva-repl:1:1480).
+; Unable to resolve symbol: x in this context
+clj::timeline.utils=>
+x
+; Syntax error compiling at (output.calva-repl:1:1480).
+; Unable to resolve symbol: x in this context
+clj::timeline.utils=>
+clj::timeline.utils=>
+x
+; Evaluating file: utils.clj
+#'timeline.utils/x
+clj::timeline.utils=>
+x
+321
+clj::timeline.utils=>
+; Syntax error reading source at (REPL:88:1).
+; Invalid token: clj::timeline.utils=>
+clj::timeline.utils=>
+x
+321
+clj::timeline.utils=>
+x
+321
+clj::timeline.utils=>
+x
+321
+clj::timeline.utils=>
+x
+321
 clj::timeline.utils=>
 ; Evaluating file: utils.clj
-#'timeline.utils/babys-first-macro
-clj::timeline.utils=> (babys-first-macro "asdf")
-; Syntax error compiling at (output.calva-repl:8:4).
-; Unable to resolve symbol: variable in this context
+#'timeline.utils/x
+clj::timeline.utils=>
+x
+44444
 clj::timeline.utils=>
 ; Evaluating file: utils.clj
-#'timeline.utils/babys-first-macro
+#'timeline.utils/x
 clj::timeline.utils=>
 ; Evaluating file: utils.clj
-#'timeline.utils/babys-first-macro
+#'timeline.utils/x
 clj::timeline.utils=>
 ; Evaluating file: utils.clj
-#'timeline.utils/babys-first-macro
+#'timeline.utils/x
 clj::timeline.utils=>
-; Evaluating file: utils.clj
-#'timeline.utils/babys-first-macro
 clj::timeline.utils=>
-; Evaluating file: utils.clj
-#'timeline.utils/babys-first-macro
+x
+44444
 clj::timeline.utils=>
-; Evaluating file: utils.clj
-#'timeline.utils/babys-first-macro
 clj::timeline.utils=>
-; Evaluating file: utils.clj
-#'timeline.utils/babys-first-macro
+x
+44444
 clj::timeline.utils=>
-; Evaluating file: utils.clj
-#'timeline.utils/babys-first-macro
-clj::timeline.utils=>
-; Evaluating file: utils.clj
-#'timeline.utils/babys-first-macro
-clj::timeline.utils=>
-; Evaluating file: utils.clj
-#'timeline.utils/babys-first-macro
-clj::timeline.utils=>
-; Evaluating file: utils.clj
-#'timeline.utils/babys-first-macro
-clj::timeline.utils=>
-; Evaluating file: utils.clj
-#'timeline.utils/babys-first-macro
-clj::timeline.utils=>
-; Evaluating file: utils.clj
-#'timeline.utils/babys-first-macro
-clj::timeline.utils=>
-; Evaluating file: utils.clj
-#'timeline.utils/babys-first-macro
-clj::timeline.utils=>
-; Evaluating file: utils.clj
-#'timeline.utils/babys-first-macro
-clj::timeline.utils=>
-; Evaluating file: utils.clj
-#'timeline.utils/babys-first-macro
-clj::timeline.utils=>
-; Evaluating file: utils.clj
-#'timeline.utils/babys-first-macro
-clj::timeline.utils=>
-; Evaluating file: utils.clj
-#'timeline.utils/babys-first-macro
-clj::timeline.utils=>
-; nREPL Connection was closed
