@@ -1,15 +1,17 @@
 (ns timeline.core
-  (:require [rum.core :as rum])
-  (:require-macros [timeline.utils :refer [inline-resource]]))
+  (:require
+   [rum.core :as rum]
+   [timeline.utils :as utils])
+  (:require-macros
+   [timeline.utils :refer [inline-resource]]))
 
 (def example-text (inline-resource "hopl-clojure.html"))
 
 (println)
 (enable-console-print!)
 
-; (def inline-date-tags (array-seq (.getElementsByClassName js/document "timeline-item")))
-; (def years (for [d inline-date-tags] (int (.-innerText d)))) ; TODO: Put back
-(def years [2000 2001 2003 2004 2010])
+(def inline-date-tags (array-seq (.getElementsByClassName js/document "timeline-item")))
+(def years (for [d inline-date-tags] (int (.-innerText d)))) ; TODO: Put back
 
 (defn get-percent [y -min-year -max-year]
   (* 100  (divide (- y -min-year) (- -max-year -min-year))))
@@ -18,23 +20,27 @@
 (defn get-adjusted-percent [y -min-year -max-year]
   (+ 2 (* (get-percent y -min-year -max-year) .9)))
 
-(defn render-year [y]
+(defn render-year [i year]
   (let [min-year (apply min years)
         max-year (apply max years)]
     [:span
-     {:className "point"
-      :style {:left (str (get-adjusted-percent y min-year max-year) "vw")}}
-     y]))
+     {:className "point" ; TODO: Consider using flexbox instead
+      :key (str i (utils/rand-str 3))
+      :style {:left (str (get-adjusted-percent year min-year max-year) "vw")}}
+     year]))
 
 (rum/defc hello-world < rum/reactive
   ([]
    [:div
-    [:div {:class "timeline"} (map render-year years)]
+    [:div {:class "timeline"} (map-indexed render-year years)]
     ; [:button {:onClick #(js/alert "hello")}  "Click me"]
     [:div {:dangerouslySetInnerHTML {:__html example-text}}]]))
 
 ;; Here's how you use JS's dot operator
 (rum/mount (hello-world) (. js/document (getElementById "app")))
+
+; TODO: Decide what to render in the case where a single date occurs >1x
+; (e.g. in the HOPL example)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

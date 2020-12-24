@@ -44,3 +44,4 @@ I'm a Clojure newbie, and I don't like getting stuck on the same things twice. F
 - `for` is lazy, i.e. it only executes the values once you ask for them. `doseq` is like `for`, but it's not lazy.
 - To access variables in your repl that are defined within a file, you need to enter that namespace via `(ns timeline.core)`.
 - The shortcut form for `(fn )` is `#( )`
+- You can import macros from a `clj` file → `cljs` file because they're run at compile time, but you cannot import functions from a `clj` file → `cljs` file because that would require running them at runtime.
