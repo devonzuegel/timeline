@@ -3,7 +3,7 @@
    [rum.core :as rum]
    [timeline.utils :as utils])
   (:require-macros
-   [timeline.utils :refer [inline-resource]]))
+   [timeline.utils :refer [inline-resource babys-first-macro]]))
 
 (def example-text (inline-resource "hopl-clojure.html"))
 
@@ -15,6 +15,11 @@
 ; once you hot-reload, but that's obviously not the desired behavior.
 (def inline-date-tags (array-seq (.getElementsByClassName js/document "timeline-item")))
 (def years (for [d inline-date-tags] (int (.-innerText d))))
+
+;; define your app data so that doesn't get over-written on reload
+(defonce app-state (atom {:selected-date nil}))
+
+(babys-first-macro years)
 
 ; Fetch ids
 (print (for [d inline-date-tags]

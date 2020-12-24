@@ -1,0 +1,93 @@
+; This is the Calva evaluation results output window.
+; TIPS: The keyboard shortcut `ctrl+alt+c o` shows and focuses this window
+;   when connected to a REPL session.
+; Please see https://calva.io/output/ for more info.
+; Happy coding! ♥️
+
+; Connecting ...
+; Hooking up nREPL sessions...
+; Connected session: clj
+; TIPS: 
+;   - You can edit the contents here. Use it as a REPL if you like.
+;   - `alt+enter` evaluates the current top level form.
+;   - `ctrl+enter` evaluates the current form.
+;   - `alt+up` and `alt+down` traverse up and down the REPL command history
+;      when the cursor is after the last contents at the prompt
+;   - Clojure lines in stack traces are peekable and clickable.
+clj::user=>
+\\
+\\
+clj::user=> (+ 1 1)
+2
+clj::user=> (in-ns 'timeline.core)
+#object[clojure.lang.Namespace 0x2dbb0d4e "timeline.core"]
+clj::timeline.core=>
+; Syntax error reading source at (REPL:24:1).
+; Invalid token: clj::timeline.core=>
+clj::timeline.core=> (in-ns 'timeline.utils)
+#object[clojure.lang.Namespace 0x566f5f7b "timeline.utils"]
+clj::timeline.utils=> (babys-first-macro "asdf")
+; Syntax error compiling at (output.calva-repl:29:22).
+; Unable to resolve symbol: babys-first-macro in this context
+clj::timeline.utils=>
+; Evaluating file: utils.clj
+#'timeline.utils/babys-first-macro
+clj::timeline.utils=> (babys-first-macro "asdf")
+; Syntax error compiling at (output.calva-repl:8:4).
+; Unable to resolve symbol: variable in this context
+clj::timeline.utils=>
+; Evaluating file: utils.clj
+#'timeline.utils/babys-first-macro
+clj::timeline.utils=>
+; Evaluating file: utils.clj
+#'timeline.utils/babys-first-macro
+clj::timeline.utils=>
+; Evaluating file: utils.clj
+#'timeline.utils/babys-first-macro
+clj::timeline.utils=>
+; Evaluating file: utils.clj
+#'timeline.utils/babys-first-macro
+clj::timeline.utils=>
+; Evaluating file: utils.clj
+#'timeline.utils/babys-first-macro
+clj::timeline.utils=>
+; Evaluating file: utils.clj
+#'timeline.utils/babys-first-macro
+clj::timeline.utils=>
+; Evaluating file: utils.clj
+#'timeline.utils/babys-first-macro
+clj::timeline.utils=>
+; Evaluating file: utils.clj
+#'timeline.utils/babys-first-macro
+clj::timeline.utils=>
+; Evaluating file: utils.clj
+#'timeline.utils/babys-first-macro
+clj::timeline.utils=>
+; Evaluating file: utils.clj
+#'timeline.utils/babys-first-macro
+clj::timeline.utils=>
+; Evaluating file: utils.clj
+#'timeline.utils/babys-first-macro
+clj::timeline.utils=>
+; Evaluating file: utils.clj
+#'timeline.utils/babys-first-macro
+clj::timeline.utils=>
+; Evaluating file: utils.clj
+#'timeline.utils/babys-first-macro
+clj::timeline.utils=>
+; Evaluating file: utils.clj
+#'timeline.utils/babys-first-macro
+clj::timeline.utils=>
+; Evaluating file: utils.clj
+#'timeline.utils/babys-first-macro
+clj::timeline.utils=>
+; Evaluating file: utils.clj
+#'timeline.utils/babys-first-macro
+clj::timeline.utils=>
+; Evaluating file: utils.clj
+#'timeline.utils/babys-first-macro
+clj::timeline.utils=>
+; Evaluating file: utils.clj
+#'timeline.utils/babys-first-macro
+clj::timeline.utils=>
+; nREPL Connection was closed
