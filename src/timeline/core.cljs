@@ -11,7 +11,12 @@
 (enable-console-print!)
 
 (def inline-date-tags (array-seq (.getElementsByClassName js/document "timeline-item")))
-(def years (for [d inline-date-tags] (int (.-innerText d)))) ; TODO: Put back
+(def years (for [d inline-date-tags] (int (.-innerText d))))
+
+; Fetch ids
+(print (for [d inline-date-tags]
+         [(int (.-innerText d))
+          (.-id d)]))
 
 (defn get-percent [y -min-year -max-year]
   (* 100  (divide (- y -min-year) (- -max-year -min-year))))
