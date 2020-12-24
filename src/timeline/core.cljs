@@ -10,6 +10,9 @@
 (println "--------------------------------------------------------------------")
 (enable-console-print!)
 
+; TODO: The dates "don't exist" when you first load this, because this is
+; executed before the dates actually exist in the document. This then is fixed
+; once you hot-reload, but that's obviously not the desired behavior.
 (def inline-date-tags (array-seq (.getElementsByClassName js/document "timeline-item")))
 (def years (for [d inline-date-tags] (int (.-innerText d))))
 
