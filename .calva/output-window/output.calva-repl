@@ -123,4 +123,6 @@ clj::timeline.utils=>
 clj::timeline.utils=>
 x
 44444
+clj::timeline.utils=> (def -x 1)
+#'timeline.utils/-x
 clj::timeline.utils=>

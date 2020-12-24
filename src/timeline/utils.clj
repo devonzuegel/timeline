@@ -20,5 +20,9 @@
     `(println ~variable)))
 
 ; Notes for using the repl as a feedback loop
-;; ctrl+c ctrl+k => reload file into repl
-;; alt+shift+up  => get previous line
+;
+; ctrl+c ctrl+k => reload file into repl
+; alt+shift+up  => get previous line
+;
+; Trick: When building up a value in the repl, put a little - in front to
+; indicate that you shouldn't use that value because you built it up in repl.
