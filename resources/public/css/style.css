@@ -2,6 +2,19 @@
   white-space: pre-wrap;
 }
 
+.timeline {
+  line-height: 1;
+  border-bottom: 1px solid grey;
+  margin-bottom: 24px;
+}
+
+.point {
+  border-left: 1px solid grey;
+  position: relative;
+  padding-left: 4px;
+  margin-left: 4px;
+}
+
 // -----------------------------
 
 /*!
