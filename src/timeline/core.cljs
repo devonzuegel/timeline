@@ -7,7 +7,7 @@
 
 (def example-text (inline-resource "hopl-clojure.html"))
 
-(println)
+(println "--------------------------------------------------------------------")
 (enable-console-print!)
 
 (def inline-date-tags (array-seq (.getElementsByClassName js/document "timeline-item")))
@@ -50,5 +50,5 @@
           (= 92 (get-adjusted-percent 2010 2000 2010)) ; = (100 * .9) + 2
           (= 11 (get-adjusted-percent 2001 2000 2010)) ; = (10 * .9) + 2
           (= 2 (get-adjusted-percent 2000 2000 2010))) ; = (0 * .9) + 2
-) ; Add new tests here
+         )
   (js/alert "Tests are failing!"))
