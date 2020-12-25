@@ -47,7 +47,7 @@
    [:div
     [:div {:class "timeline"} (map-indexed render-year years)]
     ; [:button {:onClick #(js/alert "hello")}  "Click me"]
-    [:div {:dangerouslySetInnerHTML {:__html example-text}}]]))
+    [:div {:class "html-text" :dangerouslySetInnerHTML {:__html example-text}}]]))
 
 ;; Here's how you use JS's dot operator
 (rum/mount (hello-world) (. js/document (getElementById "app")))
