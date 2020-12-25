@@ -22,10 +22,19 @@
   font-size: 0.9em;
 }
 
-.html-text {
+.wrapper {
   max-width: 720px;
   margin: auto;
-  padding: 72px 36px;
+  padding: 0 36px;
+}
+
+pre {
+  padding: 16px 0 36px;
+}
+
+.spacer {
+  height: 72px;
+  width: 100%;
 }
 
 .html-text .timeline-item {
