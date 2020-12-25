@@ -7,7 +7,11 @@
   border-bottom: 1px solid grey;
   margin-bottom: 24px;
   height: 32px;
+  width: 100%;
   font-weight: bold;
+  position: fixed;
+  background: white;
+  z-index: 1000;
 }
 
 .point {
@@ -21,7 +25,7 @@
 .html-text {
   max-width: 720px;
   margin: auto;
-  padding: 12px 36px;
+  padding: 72px 36px;
 }
 
 .html-text .timeline-item {
