@@ -37,17 +37,29 @@
   (let [min-year (apply min years)
         max-year (apply max years)]
     [:span
-     {:className "point" ; TODO: Consider using flexbox instead
+     {:class "point" ; TODO: Consider using flexbox instead
       :key (str i (utils/rand-str 3))
       :style {:left (str (get-adjusted-percent year min-year max-year) "vw")}}
      year]))
 
+(defn update-selected-date [current-app-state new-date]
+  (assoc-in current-app-state [:selected-date] new-date)) ;; No need to deref it
+
 (rum/defc hello-world < rum/reactive
   ([]
-   [:div
-    [:div {:class "timeline"} (map-indexed render-year years)]
+   (let [state (rum/react app-state)]
+     ; Register a listener to tell this component to react to the state.
+     ; - `app-state` is the reference to the atom
+     ; - `state` is the value, which gets refreshed each time the atom is updated
+     ;    (but is not actually the source of truth reference itself)
+     [:div
+      [:div {:class "timeline"} (map-indexed render-year years)]
     ; [:button {:onClick #(js/alert "hello")}  "Click me"]
-    [:div {:class "html-text" :dangerouslySetInnerHTML {:__html example-text}}]]))
+      [:div {:class "spacer"}]
+      [:div {:class "wrapper" :on-click (fn [e] (swap! app-state update-selected-date "foooo"))}
+       [:pre "app state: " (pr-str state)]
+       [:div {:class "html-text" :dangerouslySetInnerHTML {:__html example-text}}]]
+      [:div {:class "spacer"}]])))
 
 ;; Here's how you use JS's dot operator
 (rum/mount (hello-world) (. js/document (getElementById "app")))
