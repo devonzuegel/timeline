@@ -13,7 +13,7 @@
 
 ;; define your app data so that doesn't get over-written on reload
 (defonce app-state
-  (atom {:selected-date nil
+  (atom {:selected-date-id nil
          :years nil}))
 
 (defn -update-years [current-app-state years]
@@ -32,15 +32,15 @@
 (defn get-adjusted-percent [y -min-year -max-year]
   (+ 2 (* (get-percent y -min-year -max-year) .9)))
 
-(defn -update-selected-date [current-app-state new-date]
-  (assoc-in current-app-state [:selected-date] new-date)) ;; No need to deref it
+(defn -update-selected-date-id [current-app-state new-date]
+  (assoc-in current-app-state [:selected-date-id] new-date)) ;; No need to deref it
 
-(defn update-selected-date [e] (swap! app-state -update-selected-date "foooo"))
+(defn update-selected-date-id [e] (swap! app-state -update-selected-date-id "foooo"))
 
 (defn click-event [date]
   (fn [e]
     (println "Date clicked:" date)
-    (swap! app-state -update-selected-date date)))
+    (swap! app-state -update-selected-date-id date)))
 
 (defn contains-multiple? [m keys]
   (every? #(contains? m %) keys))
@@ -51,7 +51,7 @@
    (string? (:id y))
    (number? (:year-number y))))
 
-(defn render-year-fn [years selected-date] ; Curry the function based on entire range of years
+(defn render-year-fn [years selected-date-id] ; Curry the function based on entire range of years
   {:pre [(every? is-year-map? years)]}
   (fn [i year]
     (let [min-year (apply min (map :year-number years))
@@ -61,7 +61,7 @@
           year-number (:year-number year)
           point-id (str year-id "--point")]
       [:span
-       {:class ["point" (when (= year-id selected-date) "selected")] ; TODO: Consider using flexbox instead
+       {:class ["point" (when (= year-id selected-date-id) "selected")] ; TODO: Consider using flexbox instead
         :key point-id
         :id point-id
         :on-click (click-event year-id)
@@ -83,9 +83,9 @@
    (let [state (rum/react app-state) ; * Comment below
          years (:years state)]
      [:div
-      [:div {:class "timeline"} (map-indexed (render-year-fn years (:selected-date state)) years)]
+      [:div {:class "timeline"} (map-indexed (render-year-fn years (:selected-date-id state)) years)]
       [:div {:class "spacer"}]
-      [:div {:class "wrapper"} ; :on-click update-selected-date }
+      [:div {:class "wrapper"} ; :on-click update-selected-date-id }
        [:pre (with-out-str (pp/pprint state))]
        [:div {:class "html-text" :dangerouslySetInnerHTML {:__html example-text}}]]
       [:div {:class "spacer"}]])))
