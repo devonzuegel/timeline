@@ -51,7 +51,7 @@
    (string? (:id y))
    (number? (:year-number y))))
 
-(defn render-year-fn [years] ; Curry the function based on entire range of years
+(defn render-year-fn [years selected-date] ; Curry the function based on entire range of years
   {:pre [(every? is-year-map? years)]}
   (fn [i year]
     (let [min-year (apply min (map :year-number years))
@@ -61,7 +61,7 @@
           year-number (:year-number year)
           point-id (str year-id "--point")]
       [:span
-       {:class "point" ; TODO: Consider using flexbox instead
+       {:class ["point" (when (= year-id selected-date) "selected")] ; TODO: Consider using flexbox instead
         :key point-id
         :id point-id
         :on-click (click-event year-id)
@@ -83,7 +83,7 @@
    (let [state (rum/react app-state) ; * Comment below
          years (:years state)]
      [:div
-      [:div {:class "timeline"} (map-indexed (render-year-fn years) years)]
+      [:div {:class "timeline"} (map-indexed (render-year-fn years (:selected-date state)) years)]
       [:div {:class "spacer"}]
       [:div {:class "wrapper"} ; :on-click update-selected-date }
        [:pre (with-out-str (pp/pprint state))]

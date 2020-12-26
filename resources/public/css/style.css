@@ -8,7 +8,6 @@
   margin-bottom: 24px;
   height: 32px;
   width: 100%;
-  font-weight: bold;
   position: fixed;
   background: white;
   z-index: 1000;
@@ -20,6 +19,7 @@
   padding: 10px;
   margin-left: 4px;
   font-size: 0.9em;
+  cursor: pointer;
 }
 
 .wrapper {
@@ -38,11 +38,15 @@ pre {
 }
 
 .html-text .timeline-item {
-  font-weight: bold;
   cursor: pointer;
   background-color: rgba(0, 240, 124, 0.4);
   border-radius: 4px;
   padding: 2px 4px;
+}
+
+.selected {
+  font-weight: bold;
+  text-shadow: 1px 1px 1px rgba(0, 240, 124, 0.5);
 }
 
 // -----------------------------
