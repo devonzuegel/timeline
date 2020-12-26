@@ -15,11 +15,6 @@
   (atom {:selected-date nil
          :years nil}))
 
-; ; Fetch ids
-; (print (for [d inline-date-tags]
-;          [(int (.-innerText d))
-;           (.-id d)]))
-
 (defn get-percent [y -min-year -max-year]
   (* 100  (divide (- y -min-year) (- -max-year -min-year))))
 
@@ -40,11 +35,26 @@
 (defn -update-years [current-app-state years]
   (assoc-in current-app-state [:years] years)) ;; No need to deref it
 
+
+(defn -update-selected-date [current-app-state new-date]
+  (assoc-in current-app-state [:selected-date] new-date)) ;; No need to deref it
+
+(defn update-selected-date [e] (swap! app-state -update-selected-date "foooo"))
+
+(defn click-event [date]
+  (fn [e]
+    (println "Date clicked:" date)
+    (swap! app-state -update-selected-date date)))
+
+(defn get-date-from-inline-date-tag [date-tag]
+  (str (.-id date-tag)))
+
 (defn fetch-years [] ; Build up `years` variable and put it in the atom
-  ; (println "mounted!" (js/Date)) ; TODO: Remove me
   (let [inline-date-tags (array-seq (.getElementsByClassName js/document "timeline-item"))]
-    (let [years (for [d inline-date-tags] (int (.-innerText d)))]
-      (swap! app-state -update-years years))))
+    (let [years (for [d inline-date-tags] (get-date-from-inline-date-tag d))]
+      (swap! app-state -update-years years))
+    (doseq [d inline-date-tags]
+      (.addEventListener d "click" (click-event (get-date-from-inline-date-tag d)) false))))
 
 (rum/defc hello-world <
   rum/reactive {:did-mount fetch-years}
@@ -62,28 +72,13 @@
 ; Here's how you use JS's dot operator
 (rum/mount (hello-world) (. js/document (getElementById "app")))
 
-(comment
+(comment ; A place to store useful tidbits
+  (println "mounted!" (js/Date))
 
-  (defn -update-selected-date [current-app-state new-date]
-    (assoc-in current-app-state [:selected-date] new-date)) ;; No need to deref it
-
-  (defn update-selected-date [e] (swap! app-state -update-selected-date "foooo"))
-
-  ; TODO: The dates "don't exist" when you first load this, because this is
-  ; executed before the dates actually exist in the document. This then is fixed
-  ; once you hot-reload, but that's obviously not the desired behavior.
-  (def inline-date-tags (array-seq (.getElementsByClassName js/document "timeline-item")))
-  (def years (for [d inline-date-tags] (int (.-innerText d))))
-
-  (babys-first-macro years)
-
-  (defn click-event [e]
-    (println "Button clicked"))
-
-  (doseq [d inline-date-tags] (.addEventListener d "click" (fn [e] (print "clicked!"))))
-  (doseq [d inline-date-tags]
-    (babys-first-macro d)
-    (.addEventListener d "click" click-event false)))
+  ; Fetch ids
+  (print (for [d inline-date-tags]
+           [(get-date-from-inline-date-tag d)
+            (.-id d)])))
 
 ; * Register a listener to tell this component to react to the state.
 ;   - `app-state` is the reference to the atom
