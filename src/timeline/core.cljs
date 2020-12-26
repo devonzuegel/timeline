@@ -47,6 +47,9 @@
     (swap! app-state -update-selected-date date)))
 
 (defn get-date-from-inline-date-tag [date-tag]
+  (int (.-innerText date-tag)))
+
+(defn get-id-from-inline-date-tag [date-tag]
   (str (.-id date-tag)))
 
 (defn fetch-years [] ; Build up `years` variable and put it in the atom
@@ -54,7 +57,7 @@
     (let [years (for [d inline-date-tags] (get-date-from-inline-date-tag d))]
       (swap! app-state -update-years years))
     (doseq [d inline-date-tags]
-      (.addEventListener d "click" (click-event (get-date-from-inline-date-tag d)) false))))
+      (.addEventListener d "click" (click-event (get-id-from-inline-date-tag d)) false))))
 
 (rum/defc hello-world <
   rum/reactive {:did-mount fetch-years}
