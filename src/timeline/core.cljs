@@ -23,7 +23,7 @@
 (defn get-adjusted-percent [y -min-year -max-year]
   (+ 2 (* (get-percent y -min-year -max-year) .9)))
 
-(defn render-year [years] ; Curry the function based on entire range of years
+(defn render-year-fn [years] ; Curry the function based on entire range of years
   (fn [i year]
     (let [min-year (apply min years)
           max-year (apply max years)]
@@ -69,7 +69,7 @@
    (let [state (rum/react app-state) ; * Comment below
          years (map :year-number (:years state))]
      [:div
-      [:div {:class "timeline"} (map-indexed (render-year years) years)]
+      [:div {:class "timeline"} (map-indexed (render-year-fn years) years)]
       [:div {:class "spacer"}]
       [:div {:class "wrapper"} ; :on-click update-selected-date }
        [:pre (with-out-str (pp/pprint state))]
