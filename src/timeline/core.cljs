@@ -2,7 +2,8 @@
   (:require
    [rum.core :as rum]
    [cljs.pprint :as pp]
-   [timeline.utils :as utils])
+   [timeline.utils :as utils]
+   [goog.dom.classlist :as classlist])
   (:require-macros
    [timeline.utils :refer [inline-resource babys-first-macro]]))
 
@@ -36,10 +37,18 @@
 
 (defn update-selected-date-id [e] (swap! app-state -update-selected-date-id "foooo"))
 
-(defn click-event [date]
+(defn click-year [year-id]
   (fn [e]
-    (println "Date clicked:" date)
-    (swap! app-state -update-selected-date-id date)))
+    (when-let [old-selection (.getElementById js/document (:selected-date-id @app-state))]
+      (classlist/remove old-selection "selected"))
+    (if-let [new-selection (.getElementById js/document year-id)]
+      (do
+        (classlist/add new-selection "selected")
+        (println "year-id clicked:" year-id)
+        (let [top-offset (- (.-offsetTop new-selection) 64)]
+          (set! (.. js/document -documentElement -scrollTop) top-offset)))
+      (throw (js/Error (str "Couldn't find the expected inline date with id: " year-id))))
+    (swap! app-state -update-selected-date-id year-id)))
 
 (defn contains-multiple? [m keys]
   (every? #(contains? m %) keys))
@@ -63,7 +72,7 @@
        {:class ["point" (when (= year-id selected-date-id) "selected")] ; TODO: Consider using flexbox instead
         :key point-id
         :id point-id
-        :on-click (click-event year-id)
+        :on-click (click-year year-id)
         :style {:left (str (get-adjusted-percent year-number min-year max-year) "vw")}}
        year-number])))
 
@@ -74,7 +83,9 @@
                    :year-number (get-date-from-inline-date-tag d)})]
       (swap! app-state -update-years years))
     (doseq [d inline-date-tags]
-      (.addEventListener d "click" (click-event (get-id-from-inline-date-tag d)) false))))
+      (.addEventListener
+       d "click"
+       (click-year (get-id-from-inline-date-tag d)) false))))
 
 (rum/defc hello-world <
   rum/reactive {:did-mount fetch-years}
