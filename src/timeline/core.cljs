@@ -27,15 +27,15 @@
 (defn get-adjusted-percent [y -min-year -max-year]
   (+ 2 (* (get-percent y -min-year -max-year) .9)))
 
-(def tmp-years [1 2 4 5 10])
-(defn render-year [i year]
-  (let [min-year (apply min tmp-years)
-        max-year (apply max tmp-years)]
-    [:span
-     {:class "point" ; TODO: Consider using flexbox instead
-      :key (str i (utils/rand-str 3))
-      :style {:left (str (get-adjusted-percent year min-year max-year) "vw")}}
-     year]))
+(defn render-year [years] ; Curry the function based on entire range of years
+  (fn [i year]
+    (let [min-year (apply min years)
+          max-year (apply max years)]
+      [:span
+       {:class "point" ; TODO: Consider using flexbox instead
+        :key (str i (utils/rand-str 3))
+        :style {:left (str (get-adjusted-percent year min-year max-year) "vw")}}
+       year])))
 
 (defn -update-years [current-app-state years]
   (assoc-in current-app-state [:years] years)) ;; No need to deref it
@@ -49,14 +49,10 @@
 (rum/defc hello-world <
   rum/reactive {:did-mount fetch-years}
   ([]
-   (let [state (rum/react app-state)]
-     ; Register a listener to tell this component to react to the state.
-     ; - `app-state` is the reference to the atom
-     ; - `state` is the value, which gets refreshed each time the atom is updated
-     ;    (but is not actually the source of truth reference itself)
+   (let [state (rum/react app-state) ; * Comment below
+         years (:years state)]
      [:div
-      [:div {:class "timeline"} (map-indexed render-year tmp-years)]
-    ; [:button {:onClick #(js/alert "hello")}  "Click me"]
+      [:div {:class "timeline"} (map-indexed (render-year years) years)]
       [:div {:class "spacer"}]
       [:div {:class "wrapper"} ; :on-click update-selected-date }
        [:pre "app-state: " (pr-str state)]
@@ -89,6 +85,11 @@
 
 ;; Here's how you use JS's dot operator
 (rum/mount (hello-world) (. js/document (getElementById "app")))
+
+; * Register a listener to tell this component to react to the state.
+;   - `app-state` is the reference to the atom
+;   - `state` is the value, which gets refreshed each time the atom is updated
+;      (but is not actually the source of truth reference itself)
 
 ; TODO: Decide what to render in the case where a single date occurs >1x
 ; (e.g. in the HOPL example)
