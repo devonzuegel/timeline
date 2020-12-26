@@ -10,21 +10,15 @@
 (println "--------------------------------------------------------------------")
 (enable-console-print!)
 
-; TODO: The dates "don't exist" when you first load this, because this is
-; executed before the dates actually exist in the document. This then is fixed
-; once you hot-reload, but that's obviously not the desired behavior.
-(def inline-date-tags (array-seq (.getElementsByClassName js/document "timeline-item")))
-(def years (for [d inline-date-tags] (int (.-innerText d))))
-
 ;; define your app data so that doesn't get over-written on reload
-(defonce app-state (atom {:selected-date nil}))
+(defonce app-state
+  (atom {:selected-date nil
+         :years nil}))
 
-(babys-first-macro years)
-
-; Fetch ids
-(print (for [d inline-date-tags]
-         [(int (.-innerText d))
-          (.-id d)]))
+; ; Fetch ids
+; (print (for [d inline-date-tags]
+;          [(int (.-innerText d))
+;           (.-id d)]))
 
 (defn get-percent [y -min-year -max-year]
   (* 100  (divide (- y -min-year) (- -max-year -min-year))))
@@ -33,19 +27,34 @@
 (defn get-adjusted-percent [y -min-year -max-year]
   (+ 2 (* (get-percent y -min-year -max-year) .9)))
 
+(def tmp-years [1 2 4 5 10])
 (defn render-year [i year]
-  (let [min-year (apply min years)
-        max-year (apply max years)]
+  (let [min-year (apply min tmp-years)
+        max-year (apply max tmp-years)]
     [:span
      {:class "point" ; TODO: Consider using flexbox instead
       :key (str i (utils/rand-str 3))
       :style {:left (str (get-adjusted-percent year min-year max-year) "vw")}}
      year]))
 
-(defn update-selected-date [current-app-state new-date]
+(defn -update-selected-date [current-app-state new-date]
   (assoc-in current-app-state [:selected-date] new-date)) ;; No need to deref it
 
-(rum/defc hello-world < rum/reactive
+(defn update-selected-date [e] (swap! app-state -update-selected-date "foooo"))
+
+(defn -update-years [current-app-state years]
+  (assoc-in current-app-state [:years] years)) ;; No need to deref it
+
+(defn update-years [years] (swap! app-state -update-years years))
+
+(defn fetch-years [] ; Build up `years` variable and put it in the atom
+  ; (println "mounted!" (js/Date)) ; TODO: Remove me
+  (let [inline-date-tags (array-seq (.getElementsByClassName js/document "timeline-item"))]
+    (let [years (for [d inline-date-tags] (int (.-innerText d)))]
+      (update-years years))))
+
+(rum/defc hello-world <
+  rum/reactive {:did-mount fetch-years}
   ([]
    (let [state (rum/react app-state)]
      ; Register a listener to tell this component to react to the state.
@@ -53,13 +62,31 @@
      ; - `state` is the value, which gets refreshed each time the atom is updated
      ;    (but is not actually the source of truth reference itself)
      [:div
-      [:div {:class "timeline"} (map-indexed render-year years)]
+      [:div {:class "timeline"} (map-indexed render-year tmp-years)]
     ; [:button {:onClick #(js/alert "hello")}  "Click me"]
       [:div {:class "spacer"}]
-      [:div {:class "wrapper" :on-click (fn [e] (swap! app-state update-selected-date "foooo"))}
-       [:pre "app state: " (pr-str state)]
+      [:div {:class "wrapper"} ; :on-click update-selected-date }
+       [:pre "app-state: " (pr-str state)]
        [:div {:class "html-text" :dangerouslySetInnerHTML {:__html example-text}}]]
       [:div {:class "spacer"}]])))
+
+
+(comment
+; TODO: The dates "don't exist" when you first load this, because this is
+; executed before the dates actually exist in the document. This then is fixed
+; once you hot-reload, but that's obviously not the desired behavior.
+  (def inline-date-tags (array-seq (.getElementsByClassName js/document "timeline-item")))
+  (def years (for [d inline-date-tags] (int (.-innerText d))))
+
+  (babys-first-macro years)
+
+  (defn click-event [e]
+    (println "Button clicked"))
+
+  (doseq [d inline-date-tags] (.addEventListener d "click" (fn [e] (print "clicked!"))))
+  (doseq [d inline-date-tags]
+    (babys-first-macro d)
+    (.addEventListener d "click" click-event false)))
 
 ;; Here's how you use JS's dot operator
 (rum/mount (hello-world) (. js/document (getElementById "app")))
