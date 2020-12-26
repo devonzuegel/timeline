@@ -59,6 +59,8 @@
        [:div {:class "html-text" :dangerouslySetInnerHTML {:__html example-text}}]]
       [:div {:class "spacer"}]])))
 
+; Here's how you use JS's dot operator
+(rum/mount (hello-world) (. js/document (getElementById "app")))
 
 (comment
 
@@ -67,9 +69,9 @@
 
   (defn update-selected-date [e] (swap! app-state -update-selected-date "foooo"))
 
-; TODO: The dates "don't exist" when you first load this, because this is
-; executed before the dates actually exist in the document. This then is fixed
-; once you hot-reload, but that's obviously not the desired behavior.
+  ; TODO: The dates "don't exist" when you first load this, because this is
+  ; executed before the dates actually exist in the document. This then is fixed
+  ; once you hot-reload, but that's obviously not the desired behavior.
   (def inline-date-tags (array-seq (.getElementsByClassName js/document "timeline-item")))
   (def years (for [d inline-date-tags] (int (.-innerText d))))
 
@@ -82,9 +84,6 @@
   (doseq [d inline-date-tags]
     (babys-first-macro d)
     (.addEventListener d "click" click-event false)))
-
-;; Here's how you use JS's dot operator
-(rum/mount (hello-world) (. js/document (getElementById "app")))
 
 ; * Register a listener to tell this component to react to the state.
 ;   - `app-state` is the reference to the atom
