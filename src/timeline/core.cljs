@@ -16,26 +16,21 @@
   (atom {:selected-date nil
          :years nil}))
 
+(defn -update-years [current-app-state years]
+  (assoc-in current-app-state [:years] years)) ;; No need to deref it
+
+(defn get-date-from-inline-date-tag [date-tag]
+  (int (.-innerText date-tag)))
+
+(defn get-id-from-inline-date-tag [date-tag]
+  (str (.-id date-tag)))
+
 (defn get-percent [y -min-year -max-year]
   (* 100  (divide (- y -min-year) (- -max-year -min-year))))
 
 ; Ajust so the timeline only takes 90% of the screen
 (defn get-adjusted-percent [y -min-year -max-year]
   (+ 2 (* (get-percent y -min-year -max-year) .9)))
-
-(defn render-year-fn [years] ; Curry the function based on entire range of years
-  (fn [i year]
-    (let [min-year (apply min years)
-          max-year (apply max years)]
-      [:span
-       {:class "point" ; TODO: Consider using flexbox instead
-        :key (str i (utils/rand-str 3))
-        :style {:left (str (get-adjusted-percent year min-year max-year) "vw")}}
-       year])))
-
-(defn -update-years [current-app-state years]
-  (assoc-in current-app-state [:years] years)) ;; No need to deref it
-
 
 (defn -update-selected-date [current-app-state new-date]
   (assoc-in current-app-state [:selected-date] new-date)) ;; No need to deref it
@@ -47,11 +42,16 @@
     (println "Date clicked:" date)
     (swap! app-state -update-selected-date date)))
 
-(defn get-date-from-inline-date-tag [date-tag]
-  (int (.-innerText date-tag)))
-
-(defn get-id-from-inline-date-tag [date-tag]
-  (str (.-id date-tag)))
+(defn render-year-fn [years] ; Curry the function based on entire range of years
+  (fn [i year]
+    (let [min-year (apply min (map :year-number years)) ; TODO: Calculate this outside of fn
+          max-year (apply max (map :year-number years))]
+      [:span
+       {:class "point" ; TODO: Consider using flexbox instead
+        :key (str i (utils/rand-str 3))
+        :on-click (click-event (:id year)) ; TODO: The year at the moment is a #, but it needs to be a dictionary for this to work
+        :style {:left (str (get-adjusted-percent year min-year max-year) "vw")}}
+       year])))
 
 (defn fetch-years [] ; Build up `years` variable and put it in the atom
   (let [inline-date-tags (array-seq (.getElementsByClassName js/document "timeline-item"))]
@@ -62,14 +62,13 @@
     (doseq [d inline-date-tags]
       (.addEventListener d "click" (click-event (get-id-from-inline-date-tag d)) false))))
 
-
 (rum/defc hello-world <
   rum/reactive {:did-mount fetch-years}
   ([]
    (let [state (rum/react app-state) ; * Comment below
-         years (map :year-number (:years state))]
+         years (:years state)]
      [:div
-      [:div {:class "timeline"} (map-indexed (render-year-fn years) years)]
+      [:div {:class "timeline"} (map-indexed (render-year-fn years) (map :year-number years))]
       [:div {:class "spacer"}]
       [:div {:class "wrapper"} ; :on-click update-selected-date }
        [:pre (with-out-str (pp/pprint state))]
