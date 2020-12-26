@@ -52,17 +52,21 @@
    (number? (:year-number y))))
 
 (defn render-year-fn [years] ; Curry the function based on entire range of years
-  {:pre [(seq years) ; Returns nil if it's empty, which causes the check to fail
-         (every? is-year-map? years)]}
+  {:pre [(every? is-year-map? years)]}
   (fn [i year]
-    (let [min-year (apply min (map :year-number years)) ; TODO: Calculate this outside of fn
-          max-year (apply max (map :year-number years))]
+    (let [min-year (apply min (map :year-number years))
+          max-year (apply max (map :year-number years))
+          ; TODO: Calculate the min & max outside of fn for better performance
+          year-id (:id year)
+          year-number (:year-number year)
+          point-id (str year-id "--point")]
       [:span
        {:class "point" ; TODO: Consider using flexbox instead
-        :key (str i (utils/rand-str 3))
-        :on-click (click-event (:id year)) ; TODO: The year at the moment is a #, but it needs to be a dictionary for this to work
-        :style {:left (str (get-adjusted-percent year min-year max-year) "vw")}}
-       year])))
+        :key point-id
+        :id point-id
+        :on-click (click-event year-id)
+        :style {:left (str (get-adjusted-percent year-number min-year max-year) "vw")}}
+       year-number])))
 
 (defn fetch-years [] ; Build up `years` variable and put it in the atom
   (let [inline-date-tags (array-seq (.getElementsByClassName js/document "timeline-item"))]
@@ -79,7 +83,7 @@
    (let [state (rum/react app-state) ; * Comment below
          years (:years state)]
      [:div
-      [:div {:class "timeline"} (map-indexed (render-year-fn years) (map :year-number years))]
+      [:div {:class "timeline"} (map-indexed (render-year-fn years) years)]
       [:div {:class "spacer"}]
       [:div {:class "wrapper"} ; :on-click update-selected-date }
        [:pre (with-out-str (pp/pprint state))]
