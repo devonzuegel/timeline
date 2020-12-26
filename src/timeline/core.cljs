@@ -37,21 +37,14 @@
       :style {:left (str (get-adjusted-percent year min-year max-year) "vw")}}
      year]))
 
-(defn -update-selected-date [current-app-state new-date]
-  (assoc-in current-app-state [:selected-date] new-date)) ;; No need to deref it
-
-(defn update-selected-date [e] (swap! app-state -update-selected-date "foooo"))
-
 (defn -update-years [current-app-state years]
   (assoc-in current-app-state [:years] years)) ;; No need to deref it
-
-(defn update-years [years] (swap! app-state -update-years years))
 
 (defn fetch-years [] ; Build up `years` variable and put it in the atom
   ; (println "mounted!" (js/Date)) ; TODO: Remove me
   (let [inline-date-tags (array-seq (.getElementsByClassName js/document "timeline-item"))]
     (let [years (for [d inline-date-tags] (int (.-innerText d)))]
-      (update-years years))))
+      (swap! app-state -update-years years))))
 
 (rum/defc hello-world <
   rum/reactive {:did-mount fetch-years}
@@ -72,6 +65,12 @@
 
 
 (comment
+
+  (defn -update-selected-date [current-app-state new-date]
+    (assoc-in current-app-state [:selected-date] new-date)) ;; No need to deref it
+
+  (defn update-selected-date [e] (swap! app-state -update-selected-date "foooo"))
+
 ; TODO: The dates "don't exist" when you first load this, because this is
 ; executed before the dates actually exist in the document. This then is fixed
 ; once you hot-reload, but that's obviously not the desired behavior.
