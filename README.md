@@ -48,6 +48,7 @@ I'm a Clojure newbie, and I don't like getting stuck on the same things twice. F
 - `utils.cljs?rel=1604213006322:71 ("http://localhost:3449/js/compiled/out/timeline/core.js")` (and the like) is printed in the console to log what files have been hot-reloaded.
 - The figwheel repl executes Clojurescript, whereas `lein repl` executes Clojure.
 - `macroexpand`
+- Prepending an expression with `#_` comments it out to the end of the expression (rather than the full line, as with `;`)
 
 ## Other things learned while working on this project
 - CSS doesn't allow IDs to start with a number, but HTML does. It momentarily caused me confusion because HTML was more permissive, but CSS just didn't recognize the IDs I'd put in the HTML.

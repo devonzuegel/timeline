@@ -42,7 +42,18 @@
     (println "Date clicked:" date)
     (swap! app-state -update-selected-date date)))
 
+(defn contains-multiple? [m keys]
+  (every? #(contains? m %) keys))
+
+(defn is-year-map? [y]
+  (and
+   (contains-multiple? y [:id :year-number])
+   (string? (:id y))
+   (number? (:year-number y))))
+
 (defn render-year-fn [years] ; Curry the function based on entire range of years
+  {:pre [(seq years) ; Returns nil if it's empty, which causes the check to fail
+         (every? is-year-map? years)]}
   (fn [i year]
     (let [min-year (apply min (map :year-number years)) ; TODO: Calculate this outside of fn
           max-year (apply max (map :year-number years))]
@@ -101,8 +112,10 @@
           (= 100 (get-percent 2010 2000 2010))
           (= 92 (get-adjusted-percent 2010 2000 2010)) ; = (100 * .9) + 2
           (= 11 (get-adjusted-percent 2001 2000 2010)) ; = (10 * .9) + 2
-          (= 2 (get-adjusted-percent 2000 2000 2010))) ; = (0 * .9) + 2
-         )
+          (= 2 (get-adjusted-percent 2000 2000 2010)) ; = (0 * .9) + 2
+          (= true (contains-multiple? {:a 1 :b 2} [:a]))
+          (= true (contains-multiple? {:a 1 :b 2} [:a :b]))
+          (= false (contains-multiple? {:a 1 :b 2} [:a :b :c]))))
   (js/alert "Tests are failing!"))
 
 (comment
