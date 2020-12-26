@@ -8,7 +8,6 @@
 
 (def example-text (inline-resource "hopl-clojure.html"))
 
-(println "--------------------------------------------------------------------")
 (enable-console-print!)
 
 ;; define your app data so that doesn't get over-written on reload
@@ -85,7 +84,7 @@
      [:div
       [:div {:class "timeline"} (map-indexed (render-year-fn years (:selected-date-id state)) years)]
       [:div {:class "spacer"}]
-      [:div {:class "wrapper"} ; :on-click update-selected-date-id }
+      [:div {:class "wrapper"}
        [:pre (with-out-str (pp/pprint state))]
        [:div {:class "html-text" :dangerouslySetInnerHTML {:__html example-text}}]]
       [:div {:class "spacer"}]])))
