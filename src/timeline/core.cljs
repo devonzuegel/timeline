@@ -54,16 +54,19 @@
 
 (defn fetch-years [] ; Build up `years` variable and put it in the atom
   (let [inline-date-tags (array-seq (.getElementsByClassName js/document "timeline-item"))]
-    (let [years (for [d inline-date-tags] (get-date-from-inline-date-tag d))]
+    (let [years (for [d inline-date-tags]
+                  {:id (get-id-from-inline-date-tag d)
+                   :year-number (get-date-from-inline-date-tag d)})]
       (swap! app-state -update-years years))
     (doseq [d inline-date-tags]
       (.addEventListener d "click" (click-event (get-id-from-inline-date-tag d)) false))))
+
 
 (rum/defc hello-world <
   rum/reactive {:did-mount fetch-years}
   ([]
    (let [state (rum/react app-state) ; * Comment below
-         years (:years state)]
+         years (map :year-number (:years state))]
      [:div
       [:div {:class "timeline"} (map-indexed (render-year years) years)]
       [:div {:class "spacer"}]
