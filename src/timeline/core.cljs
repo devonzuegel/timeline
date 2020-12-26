@@ -1,6 +1,7 @@
 (ns timeline.core
   (:require
    [rum.core :as rum]
+   [cljs.pprint :as pp]
    [timeline.utils :as utils])
   (:require-macros
    [timeline.utils :refer [inline-resource babys-first-macro]]))
@@ -71,7 +72,7 @@
       [:div {:class "timeline"} (map-indexed (render-year years) years)]
       [:div {:class "spacer"}]
       [:div {:class "wrapper"} ; :on-click update-selected-date }
-       [:pre "app-state: " (pr-str state)]
+       [:pre (with-out-str (pp/pprint state))]
        [:div {:class "html-text" :dangerouslySetInnerHTML {:__html example-text}}]]
       [:div {:class "spacer"}]])))
 
