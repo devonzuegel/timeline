@@ -39,21 +39,29 @@
 
 (defn update-selected-date-id [e] (swap! app-state -update-selected-date-id "foooo"))
 
-(defn get-scroll-top "Current scroll position" [] (.-y (dom/getDocumentScroll)))
+(defn get-scroll-top
+  "Current scroll position"
+  []
+  (.-y (dom/getDocumentScroll)))
 
-(defn click-year [year-id]
+(defn click-year [year-id scroll-on-click?]
   (fn [e]
     (when-let [old-selection (.getElementById js/document (:selected-date-id @app-state))]
-      (classlist/remove old-selection "selected"))
+      (classlist/remove old-selection "selected")
+      (doseq [d (array-seq (.getElementsByClassName js/document "selected"))]
+        (babys-first-macro d)
+        #(classlist/remove d "selected")))
     (if-let [new-selection (.getElementById js/document year-id)]
       (do
+        (babys-first-macro year-id)
         (classlist/add new-selection "selected")
-        (println "year-id clicked:" year-id)
-        (let [top-offset (- (.-offsetTop new-selection) 64)]
-          (.play (fx-dom/Scroll. (dom/getDocumentScrollElement)
-                                 #js [0 (get-scroll-top)]
-                                 #js [0 top-offset]
-                                 150)))
+        (when scroll-on-click?
+          (let [top-offset (- (.-offsetTop new-selection) 64)]
+            (.play (fx-dom/Scroll.
+                    (dom/getDocumentScrollElement)
+                    #js [0 (get-scroll-top)]
+                    #js [0 top-offset]
+                    150)))))
       (throw (js/Error (str "Couldn't find the expected inline date with id: " year-id))))
     (swap! app-state -update-selected-date-id year-id)))
 
@@ -79,7 +87,8 @@
        {:class ["point" (when (= year-id selected-date-id) "selected")] ; TODO: Consider using flexbox instead
         :key point-id
         :id point-id
-        :on-click (click-year year-id)
+        :on-click (click-year year-id true)
+        :on-mouse-over (click-year year-id false)
         :style {:left (str (get-adjusted-percent year-number min-year max-year) "vw")}}
        year-number])))
 
@@ -92,7 +101,14 @@
     (doseq [d inline-date-tags]
       (.addEventListener
        d "click"
-       (click-year (get-id-from-inline-date-tag d)) false))))
+       (click-year (get-id-from-inline-date-tag d) false) false)
+      #_(.addEventListener
+         d "mouseover"
+         #(click-year (get-id-from-inline-date-tag d) false) false)
+      #_(.addEventListener
+         d "mouseout"
+         #(classlist/remove d "selected")
+         false))))
 
 (rum/defc hello-world <
   rum/reactive {:did-mount fetch-years}
@@ -100,7 +116,8 @@
    (let [state (rum/react app-state) ; * Comment below
          years (:years state)]
      [:div
-      [:div {:class "timeline"} (map-indexed (render-year-fn years (:selected-date-id state)) years)]
+      [:div {:class "timeline"}
+       (map-indexed (render-year-fn years (:selected-date-id state)) years)]
       [:div {:class "spacer"}]
       [:div {:class "wrapper"}
        [:pre (with-out-str (pp/pprint state))]
