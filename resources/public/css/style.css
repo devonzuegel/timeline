@@ -1076,26 +1076,38 @@
 
 .timeline {
   line-height: 1;
-  border-bottom: 1px solid grey;
   margin-bottom: 24px;
   height: 32px;
   width: 100%;
   position: fixed;
   background: white;
   z-index: 1000;
+  margin: 0 24px;
 }
 
 .point {
-  border-left: 1px solid grey;
+  background-color: #aaa;
+  width: 8px;
+  height: 8px;
+  border-radius: 5px;
+  box-shadow: 0 0 1px rgba(255, 255, 255, 1);
   position: absolute;
-  padding: 10px;
-  margin-left: 4px;
-  font-size: 0.9em;
+  top: 16px;
+  margin-left: -4px;
   cursor: pointer;
+  transition: all 30ms ease;
 }
 
 .point.selected {
-  font-weight: 900;
+  background-color: black;
+  font-weight: bold;
+  z-index: 1;
+  width: 10px;
+  height: 10px;
+  top: 15px;
+  margin-left: -5px;
+  border-radius: 5px;
+  transition: all 30ms ease;
 }
 
 .wrapper {
@@ -1111,6 +1123,20 @@ pre {
 .spacer {
   height: 72px;
   width: 100%;
+}
+
+.timeline-background {
+  display: flex;
+  align-items: stretch;
+  opacity: 0.4;
+  width: 100%;
+}
+
+.timeline-background > * {
+  flex-grow: 1;
+  border-left: 1px solid grey;
+  padding: 4px 8px 0 4px;
+  font-size: 0.6em;
 }
 
 .html-text .timeline-item {
@@ -1139,7 +1165,7 @@ pre {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  padding: 2px 6px;
+  padding: 0px 4px;
   font-size: 12px;
   line-height: 20px;
   background-image: -webkit-gradient(
@@ -1149,17 +1175,12 @@ pre {
     from(#f7f7f7),
     to(#e7e7e7)
   );
-  background-image: -webkit-linear-gradient(top, #fff, #f7f7f7);
-  background-image: -moz-linear-gradient(top, #fff, #f7f7f7);
-  background-image: -ms-linear-gradient(top, #fff, #f7f7f7);
-  background-image: -o-linear-gradient(top, #fff, #f7f7f7);
 }
 
 .html-text .timeline-item:hover {
   background-color: var(--color-btn-hover-bg);
   border-color: #bbb;
   transition-duration: 0.1s;
-  // box-shadow: var(--color-btn-shadow-active), var(--color-btn-inset-shadow);
 }
 
 .html-text .timeline-item.selected {
@@ -1170,7 +1191,8 @@ pre {
   background-image: -moz-linear-gradient(top, #f7f7f7, #e7e7e7);
   background-image: -ms-linear-gradient(top, #f7f7f7, #e7e7e7);
   background-image: -o-linear-gradient(top, #f7f7f7, #e7e7e7);
-  font-weight: 900;
+  padding: 0px 3px;
+  font-weight: bold;
 }
 
 // -----------------------------

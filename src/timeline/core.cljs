@@ -39,10 +39,7 @@
 
 (defn update-selected-date-id [e] (swap! app-state -update-selected-date-id "foooo"))
 
-(defn get-scroll-top
-  "Current scroll position"
-  []
-  (.-y (dom/getDocumentScroll)))
+(defn get-scroll-top "Current scroll position" [] (.-y (dom/getDocumentScroll)))
 
 (defn click-year [year-id scroll-on-click?]
   (fn [e]
@@ -65,8 +62,7 @@
       (throw (js/Error (str "Couldn't find the expected inline date with id: " year-id))))
     (swap! app-state -update-selected-date-id year-id)))
 
-(defn contains-multiple? [m keys]
-  (every? #(contains? m %) keys))
+(defn contains-multiple? [m keys] (every? #(contains? m %) keys))
 
 (defn is-year-map? [y]
   (and
@@ -77,9 +73,8 @@
 (defn render-year-fn [years selected-date-id] ; Curry the function based on entire range of years
   {:pre [(every? is-year-map? years)]}
   (fn [i year]
-    (let [min-year (apply min (map :year-number years))
-          max-year (apply max (map :year-number years))
-          ; TODO: Calculate the min & max outside of fn for better performance
+    (let [min-year (:year-number (first years))
+          max-year (:year-number (last years))
           year-id (:id year)
           year-number (:year-number year)
           point-id (str year-id "--point")]
@@ -89,26 +84,35 @@
         :id point-id
         :on-click (click-year year-id true)
         :on-mouse-over (click-year year-id false)
-        :style {:left (str (get-adjusted-percent year-number min-year max-year) "vw")}}
-       year-number])))
+        :style {:left (str (get-percent year-number min-year (+ 1 max-year)) "vw")}}])))
+
+(defn render-timeline-background [years]
+  (let [min-year (:year-number (first years))
+        max-year (:year-number (last years))]
+    [:div {:class "timeline-background"}
+     (map (fn [x] [:span
+                  ;  {:style
+                  ;   {:left
+                  ;    (str (get-percent (+ max-year x) min-year max-year) "vw")}}
+                   x])
+          (range min-year (+ 1 max-year)))
+     #_(map (fn [i]
+              [:div :style
+               {:left
+                (str (get-percent (+ max-year i) min-year max-year) "vw")} "x "])
+            (range min-year max-year))]))
 
 (defn fetch-years [] ; Build up `years` variable and put it in the atom
   (let [inline-date-tags (array-seq (.getElementsByClassName js/document "timeline-item"))]
-    (let [years (for [d inline-date-tags]
-                  {:id (get-id-from-inline-date-tag d)
-                   :year-number (get-date-from-inline-date-tag d)})]
+    (let [years (sort-by :year-number
+                         (for [d inline-date-tags]
+                           {:id (get-id-from-inline-date-tag d)
+                            :year-number (get-date-from-inline-date-tag d)}))]
       (swap! app-state -update-years years))
     (doseq [d inline-date-tags]
       (.addEventListener
        d "click"
-       (click-year (get-id-from-inline-date-tag d) false) false)
-      #_(.addEventListener
-         d "mouseover"
-         #(click-year (get-id-from-inline-date-tag d) false) false)
-      #_(.addEventListener
-         d "mouseout"
-         #(classlist/remove d "selected")
-         false))))
+       (click-year (get-id-from-inline-date-tag d) false) false))))
 
 (rum/defc hello-world <
   rum/reactive {:did-mount fetch-years}
@@ -117,6 +121,7 @@
          years (:years state)]
      [:div
       [:div {:class "timeline"}
+       (render-timeline-background years)
        (map-indexed (render-year-fn years (:selected-date-id state)) years)]
       [:div {:class "spacer"}]
       [:div {:class "wrapper"}
