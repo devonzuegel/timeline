@@ -1,164 +1,3 @@
-.pre-wrap {
-  white-space: pre-wrap;
-}
-
-.timeline {
-  line-height: 1;
-  border-bottom: 1px solid grey;
-  margin-bottom: 24px;
-  height: 32px;
-  width: 100%;
-  position: fixed;
-  background: white;
-  z-index: 1000;
-}
-
-.point {
-  border-left: 1px solid grey;
-  position: absolute;
-  padding: 10px;
-  margin-left: 4px;
-  font-size: 0.9em;
-  cursor: pointer;
-}
-
-.wrapper {
-  max-width: 720px;
-  margin: auto;
-  padding: 0 36px;
-}
-
-pre {
-  padding: 16px 0 36pxs;
-}
-
-.spacer {
-  height: 72px;
-  width: 100%;
-}
-
-.html-text .timeline-item {
-  cursor: pointer;
-  background-color: rgba(0, 240, 124, 0.4);
-  border-radius: 4px;
-  padding: 2px 4px;
-}
-
-.selected {
-  font-weight: bold;
-  text-shadow: 1px 1px 1px rgba(0, 240, 124, 0.5);
-}
-
-// -----------------------------
-
-/*! normalize.css v4.1.1 | MIT License | github.com/necolas/normalize.css */
-html {
-  font-family: 'Inter', sans-serif;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-}
-
-/*!
- * @primer/css/core
- * http://primer.style/css
- *
- * Released under MIT license. Copyright (c) 2019 GitHub Inc.
- */
-.octicon {
-  display: inline-block;
-  vertical-align: text-top;
-  fill: currentColor;
-}
-
-body {
-  margin: 0;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
-    sans-serif, Apple Color Emoji, Segoe UI Emoji;
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--color-text-primary);
-  background-color: var(--color-bg-canvas);
-}
-
-b,
-strong {
-  font-weight: inherit;
-  font-weight: bolder;
-}
-
-dfn {
-  font-style: italic;
-}
-
-h1 {
-  font-size: 2em;
-  margin: 0.67em 0;
-}
-
-mark {
-  background-color: #ff0;
-  color: var(--color-text-primary);
-}
-
-small {
-  font-size: 80%;
-}
-
-sub,
-sup {
-  font-size: 75%;
-  line-height: 0;
-  position: relative;
-  vertical-align: initial;
-}
-
-sub {
-  bottom: -0.25em;
-}
-
-sup {
-  top: -0.5em;
-}
-
-img {
-  border-style: none;
-}
-
-code,
-kbd,
-pre,
-samp {
-  font-family: monospace, monospace;
-  font-size: 1em;
-}
-
-figure {
-  margin: 1em 40px;
-}
-
-hr {
-  box-sizing: initial;
-  height: 0;
-  overflow: visible;
-}
-
-button,
-input,
-select,
-textarea {
-  font: inherit;
-  margin: 0;
-}
-
-optgroup {
-  font-weight: 600;
-}
-
-button,
-input {
-  overflow: visible;
-}
-
 :root,
 [data-color-mode='light'] {
   --color-scale-black: #1b1f23;
@@ -423,14 +262,14 @@ input {
   --color-btn-text: #24292e;
   --color-btn-bg: #fafbfc;
   --color-btn-border: rgba(27, 31, 35, 0.15);
-  --color-btn-shadow: 0 1px 0 rgba(27, 31, 35, 0.04);
-  --color-btn-inset-shadow: inset 0 1px 0 hsla(0, 0%, 100%, 0.25);
+  --color-btn-shadow: 0 1px 3px rgba(27, 31, 35, 0.2);
+  --color-btn-inset-shadow: inset 0 1px 0 hsla(0, 50%, 100%, 1);
   --color-btn-hover-bg: #f3f4f6;
   --color-btn-hover-border: rgba(27, 31, 35, 0.15);
   --color-btn-selected-bg: #edeff2;
   --color-btn-focus-bg: #fafbfc;
-  --color-btn-focus-border: rgba(27, 31, 35, 0.15);
-  --color-btn-focus-shadow: 0 0 0 3px rgba(3, 102, 214, 0.3);
+  --color-btn-focus-border: rgba(27, 31, 35, 0.3);
+  --color-btn-shadow: 0 1px 3px rgba(27, 31, 35, 0.4);
   --color-btn-shadow-active: inset 0 0.15em 0.3em rgba(27, 31, 35, 0.15);
   --color-btn-shadow-input-focus: 0 0 0 0.2em rgba(3, 102, 214, 0.3);
   --color-btn-primary-text: #fff;
@@ -1227,6 +1066,221 @@ input {
 
 [data-color-mode='dark'] {
   color-scheme: dark;
+}
+
+// -----------------------------
+
+.pre-wrap {
+  white-space: pre-wrap;
+}
+
+.timeline {
+  line-height: 1;
+  border-bottom: 1px solid grey;
+  margin-bottom: 24px;
+  height: 32px;
+  width: 100%;
+  position: fixed;
+  background: white;
+  z-index: 1000;
+}
+
+.point {
+  border-left: 1px solid grey;
+  position: absolute;
+  padding: 10px;
+  margin-left: 4px;
+  font-size: 0.9em;
+  cursor: pointer;
+}
+
+.point.selected {
+  font-weight: 900;
+}
+
+.wrapper {
+  max-width: 720px;
+  margin: auto;
+  padding: 0 36px;
+}
+
+pre {
+  padding: 16px 0 36pxs;
+}
+
+.spacer {
+  height: 72px;
+  width: 100%;
+}
+
+.html-text .timeline-item {
+  margin: 1px;
+  color: var(--color-btn-text);
+  background-color: var(--color-btn-bg);
+  border: 1px solid var(--color-btn-border);
+  box-shadow: var(--color-btn-shadow), var(--color-btn-inset-shadow);
+  transition: 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+  transition-property: color, background-color, border-color;
+
+  position: relative;
+  display: inline-block;
+  padding: 5px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border-radius: 6px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding: 2px 6px;
+  font-size: 12px;
+  line-height: 20px;
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(#f7f7f7),
+    to(#e7e7e7)
+  );
+  background-image: -webkit-linear-gradient(top, #fff, #f7f7f7);
+  background-image: -moz-linear-gradient(top, #fff, #f7f7f7);
+  background-image: -ms-linear-gradient(top, #fff, #f7f7f7);
+  background-image: -o-linear-gradient(top, #fff, #f7f7f7);
+}
+
+.html-text .timeline-item:hover {
+  background-color: var(--color-btn-hover-bg);
+  border-color: #bbb;
+  transition-duration: 0.1s;
+  // box-shadow: var(--color-btn-shadow-active), var(--color-btn-inset-shadow);
+}
+
+.html-text .timeline-item.selected {
+  border-color: var(--color-btn-focus-border);
+  outline: none;
+  box-shadow: var(--color-btn-shadow-active), var(--color-btn-inset-shadow);
+  background-image: -webkit-linear-gradient(top, #f7f7f7, #e7e7e7);
+  background-image: -moz-linear-gradient(top, #f7f7f7, #e7e7e7);
+  background-image: -ms-linear-gradient(top, #f7f7f7, #e7e7e7);
+  background-image: -o-linear-gradient(top, #f7f7f7, #e7e7e7);
+  font-weight: 900;
+}
+
+// -----------------------------
+
+/*! normalize.css v4.1.1 | MIT License | github.com/necolas/normalize.css */
+html {
+  font-family: 'Inter', sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+/*!
+ * @primer/css/core
+ * http://primer.style/css
+ *
+ * Released under MIT license. Copyright (c) 2019 GitHub Inc.
+ */
+.octicon {
+  display: inline-block;
+  vertical-align: text-top;
+  fill: currentColor;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
+    sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-canvas);
+}
+
+b,
+strong {
+  font-weight: inherit;
+  font-weight: bolder;
+}
+
+dfn {
+  font-style: italic;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+mark {
+  background-color: #ff0;
+  color: var(--color-text-primary);
+}
+
+small {
+  font-size: 80%;
+}
+
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: initial;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+img {
+  border-style: none;
+}
+
+code,
+kbd,
+pre,
+samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+figure {
+  margin: 1em 40px;
+}
+
+hr {
+  box-sizing: initial;
+  height: 0;
+  overflow: visible;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  margin: 0;
+}
+
+optgroup {
+  font-weight: 600;
+}
+
+button,
+input {
+  overflow: visible;
 }
 
 * {
