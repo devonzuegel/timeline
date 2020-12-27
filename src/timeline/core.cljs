@@ -43,11 +43,9 @@
 
 (defn click-year [year-id scroll-on-click?]
   (fn [e]
-    (when-let [old-selection (.getElementById js/document (:selected-date-id @app-state))]
-      (classlist/remove old-selection "selected")
-      (doseq [d (array-seq (.getElementsByClassName js/document "selected"))]
-        (babys-first-macro d)
-        #(classlist/remove d "selected")))
+    (doseq [d (array-seq (.getElementsByClassName js/document "selected"))]
+      (babys-first-macro d)
+      #(classlist/remove d "selected"))
     (if-let [new-selection (.getElementById js/document year-id)]
       (do
         (babys-first-macro year-id)
@@ -58,8 +56,7 @@
                     (dom/getDocumentScrollElement)
                     #js [0 (get-scroll-top)]
                     #js [0 top-offset]
-                    150)))))
-      (throw (js/Error (str "Couldn't find the expected inline date with id: " year-id))))
+                    150))))))
     (swap! app-state -update-selected-date-id year-id)))
 
 (defn contains-multiple? [m keys] (every? #(contains? m %) keys))
@@ -84,23 +81,15 @@
         :id point-id
         :on-click (click-year year-id true)
         :on-mouse-over (click-year year-id false)
+        :on-mouse-out (click-year nil false)
         :style {:left (str (get-percent year-number min-year (+ 1 max-year)) "vw")}}])))
 
 (defn render-timeline-background [years]
   (let [min-year (:year-number (first years))
         max-year (:year-number (last years))]
     [:div {:class "timeline-background"}
-     (map (fn [x] [:span
-                  ;  {:style
-                  ;   {:left
-                  ;    (str (get-percent (+ max-year x) min-year max-year) "vw")}}
-                   x])
-          (range min-year (+ 1 max-year)))
-     #_(map (fn [i]
-              [:div :style
-               {:left
-                (str (get-percent (+ max-year i) min-year max-year) "vw")} "x "])
-            (range min-year max-year))]))
+     (map (fn [x] [:span x])
+          (range min-year (+ 1 max-year)))]))
 
 (defn fetch-years [] ; Build up `years` variable and put it in the atom
   (let [inline-date-tags (array-seq (.getElementsByClassName js/document "timeline-item"))]
