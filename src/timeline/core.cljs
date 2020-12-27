@@ -2,8 +2,10 @@
   (:require
    [rum.core :as rum]
    [cljs.pprint :as pp]
+   [goog.dom :as dom]
    [timeline.utils :as utils]
-   [goog.dom.classlist :as classlist])
+   [goog.dom.classlist :as classlist]
+   [goog.fx.dom :as fx-dom])
   (:require-macros
    [timeline.utils :refer [inline-resource babys-first-macro]]))
 
@@ -37,6 +39,8 @@
 
 (defn update-selected-date-id [e] (swap! app-state -update-selected-date-id "foooo"))
 
+(defn get-scroll-top "Current scroll position" [] (.-y (dom/getDocumentScroll)))
+
 (defn click-year [year-id]
   (fn [e]
     (when-let [old-selection (.getElementById js/document (:selected-date-id @app-state))]
@@ -46,7 +50,10 @@
         (classlist/add new-selection "selected")
         (println "year-id clicked:" year-id)
         (let [top-offset (- (.-offsetTop new-selection) 64)]
-          (set! (.. js/document -documentElement -scrollTop) top-offset)))
+          (.play (fx-dom/Scroll. (dom/getDocumentScrollElement)
+                                 #js [0 (get-scroll-top)]
+                                 #js [0 top-offset]
+                                 150)))
       (throw (js/Error (str "Couldn't find the expected inline date with id: " year-id))))
     (swap! app-state -update-selected-date-id year-id)))
 
