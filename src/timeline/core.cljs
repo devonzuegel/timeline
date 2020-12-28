@@ -45,7 +45,7 @@
   (fn [e]
     (doseq [d (array-seq (.getElementsByClassName js/document "selected"))]
       (babys-first-macro d)
-      #(classlist/remove d "selected"))
+      (classlist/remove d "selected"))
     (if-let [new-selection (.getElementById js/document year-id)]
       (do
         (babys-first-macro year-id)
