@@ -111,6 +111,9 @@
      [:div
       [:div {:class "timeline"}
        (render-timeline-background years)
+       [:div {:class "pulsating-dot"}
+        [:div {:class "dot"}]
+        [:div {:class "pulse"}]]
        (map-indexed (render-year-fn years (:selected-date-id state)) years)]
       [:div {:class "spacer"}]
       [:div {:class "wrapper"}
