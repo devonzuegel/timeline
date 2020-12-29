@@ -1110,6 +1110,11 @@
   transition: all 30ms ease;
 }
 
+.point.selected .pulsating-dot {
+  margin-left: -8px;
+  margin-top: -6px;
+}
+
 .pulsating-dot {
   position: relative;
   display: grid;

@@ -82,7 +82,14 @@
         :on-click (click-year year-id true)
         :on-mouse-over (click-year year-id false)
         :on-mouse-out (click-year nil false)
-        :style {:left (str (get-percent year-number min-year (+ 1 max-year)) "vw")}}])))
+        :style {:left (str (get-percent year-number min-year (+ 1 max-year)) "vw")}}
+
+       ; TODO: Clean up this logic
+       ; TODO: Handle the onclick
+       (when (= year-id selected-date-id)
+         [:div {:class "pulsating-dot"}
+          [:div {:class "dot"}]
+          [:div {:class "pulse"}]])])))
 
 (defn render-timeline-background [years]
   (let [min-year (:year-number (first years))
@@ -111,9 +118,6 @@
      [:div
       [:div {:class "timeline"}
        (render-timeline-background years)
-       [:div {:class "pulsating-dot"}
-        [:div {:class "dot"}]
-        [:div {:class "pulse"}]]
        (map-indexed (render-year-fn years (:selected-date-id state)) years)]
       [:div {:class "spacer"}]
       [:div {:class "wrapper"}
