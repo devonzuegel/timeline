@@ -1,5 +1,7 @@
 (ns timeline.core-test
-  (:require [clojure.test :as t :refer [deftest testing is run-tests]]))
+  (:require
+   [clojure.test :as t :refer [deftest testing is run-tests]]
+   [clojure.walk :as walk]))
 
 (def ^:dynamic *testing?* false)
 ; ^:dynamic *testing?* => This is a dynamic argument.
@@ -9,7 +11,7 @@
 
 (defmacro with-mutant [code]
   `(if *testing?*
-     nil
+     ~(walk/prewalk #(if (symbol? %) nil %) code)
      ~code))
 
 ; TODO: Instead of copying, import this from core.cljs
@@ -25,3 +27,9 @@
     (is (not (contains-multiple? {:a 1 :b 2} [:a :b :c])))))
 
 (run-tests)
+
+(comment
+  (macroexpand '(with-mutant (every? #(contains? m %) keys)))
+
+  ; Yay it worked!
+  (if timeline.core-test/*testing?* (nil (nil [nil] (nil nil nil)) nil) (every? (fn* [p1__29005#] (contains? m p1__29005#)) keys)))
