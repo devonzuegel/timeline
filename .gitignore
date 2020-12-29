@@ -13,3 +13,6 @@ pom.xml
 .nrepl-port
 .rebel_readline_history
 .calva
+.lsp
+.clj-kondo/
+.DS_Store
