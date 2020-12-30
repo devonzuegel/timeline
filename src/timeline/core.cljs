@@ -155,6 +155,8 @@
            [(get-date-from-inline-date-tag d)
             (.-id d)])))
 
+; Footnotes:
+; ----------
 ; * Register a listener to tell this component to react to the state.
 ;   - `app-state` is the reference to the atom
 ;   - `state` is the value, which gets refreshed each time the atom is updated
