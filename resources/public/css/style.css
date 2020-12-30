@@ -130,14 +130,32 @@ pre {
 }
 
 .html-text .timeline-item {
+  color: #444;
   padding: 0px 1px;
   margin: 0px 2px 0 -1px;
-  border-bottom: 2px dotted #999;
+  border-bottom: 2px dotted #bbb;
   font-weight: 600;
   cursor: pointer;
 }
 
-.html-text .timeline-item.selected,
 .html-text .timeline-item:hover {
-  border-bottom: 2px dotted black;
+  color: black;
+  border-bottom: 2px dotted rgb(117, 111, 111);
+}
+
+.html-text .timeline-item.selected {
+  color: #444;
+  border-bottom: 2px solid #555;
+}
+
+.html-text .timeline-item.selected:hover {
+  color: black;
+  border-bottom: 2px solid black;
+}
+
+.html-text .timeline-item,
+.html-text .timeline-item:hover,
+.html-text .timeline-item.selected,
+.html-text .timeline-item.selected:hover {
+  transition: all 150ms ease;
 }
