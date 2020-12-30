@@ -130,30 +130,14 @@ pre {
 }
 
 .html-text .timeline-item {
-  border: 1px solid rgba(198, 207, 206, 0.8);
-  background-color: rgba(198, 207, 206, 0.6);
-  padding: 2px 4px;
-  border-radius: 20%;
-  font-weight: bold;
+  padding: 0px 1px;
+  margin: 0px 2px 0 -1px;
+  border-bottom: 2px dotted #999;
+  font-weight: 600;
   cursor: pointer;
 }
 
-.html-text .timeline-item.selected {
-  border: 1px solid rgba(0, 230, 181, 0.7);
-  background-color: rgba(0, 230, 181, 0.5);
-  -webkit-animation: blink 1200ms infinite;
-  animation: blink 1200ms infinite;
-}
-
-@-webkit-keyframes blink {
-  50% {
-    background-color: rgba(0, 230, 181, 0.3);
-    border: 1px solid rgba(0, 230, 181, 0.5);
-  }
-}
-@keyframes blink {
-  50% {
-    border: 1px solid rgba(0, 230, 181, 0.5);
-    background-color: rgba(0, 230, 181, 0.3);
-  }
+.html-text .timeline-item.selected,
+.html-text .timeline-item:hover {
+  border-bottom: 2px dotted black;
 }
