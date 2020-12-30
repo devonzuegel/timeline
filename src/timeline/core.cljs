@@ -41,6 +41,19 @@
 
 (defn get-scroll-top "Current scroll position" [] (.-y (dom/getDocumentScroll)))
 
+(defn get-viewport-height []
+  (let [width-and-height (js->clj (.values js/Object (dom/getViewportSize)))
+        width (first width-and-height)
+        height (second width-and-height)]
+    height))
+
+(defn before-or-after-viewport [element-id]
+  (let [element-offset (.-offsetTop (.getElementById js/document element-id))]
+    (cond
+      (< element-offset (get-scroll-top)) -1
+      (< element-offset (+ (get-scroll-top) (get-viewport-height))) 0
+      :else 1)))
+
 (defn click-year [year-id scroll-on-click?]
   (fn [e]
     (doseq [d (array-seq (.getElementsByClassName js/document "selected"))]
@@ -48,7 +61,7 @@
       (classlist/remove d "selected"))
     (if-let [new-selection (.getElementById js/document year-id)]
       (do
-        (babys-first-macro year-id)
+        (print (before-or-after-viewport year-id))
         (classlist/add new-selection "selected")
         (when scroll-on-click?
           (let [top-offset (- (.-offsetTop new-selection) 64)]
