@@ -95,8 +95,6 @@
         :key point-id
         :id point-id
         :on-click (click-year year-id true)
-        :on-mouse-over (click-year year-id false)
-        :on-mouse-out (click-year nil false)
         :style {:left (str (get-percent year-number min-year (+ 1 max-year)) "vw")}}
 
        ; TODO: Clean up this logic
