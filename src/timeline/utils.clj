@@ -26,3 +26,18 @@
 ;
 ; Trick: When building up a value in the repl, put a little - in front to
 ; indicate that you shouldn't use that value because you built it up in repl.
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(comment
+  ; Use this as a playground for fiddling with the Paredit commands
+  (+ (+ 1) 2 3)
+
+  ; Tip: Think about moving the parens with paredit, not the values in the expression
+  ;
+  ; Barf Sexp Forward = Move right parens to the left
+  ; Slurp Sexp Forward = Move right parens to the right
+  ; Select Forward Sexp = Select current S-expression forwards
+  ; Select Backward Sexp = Select current S-expression backwards
+  )
+

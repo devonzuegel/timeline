@@ -162,29 +162,3 @@
 
 ; TODO: Decide what to render in the case where a single date occurs >1x
 ; (e.g. in the HOPL example)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-; Tests
-(if (not (and
-          (= 100 (get-percent 2010 2000 2010))
-          (= 92 (get-adjusted-percent 2010 2000 2010)) ; = (100 * .9) + 2
-          (= 11 (get-adjusted-percent 2001 2000 2010)) ; = (10 * .9) + 2
-          (= 2 (get-adjusted-percent 2000 2000 2010)) ; = (0 * .9) + 2
-          (= true (contains-multiple? {:a 1 :b 2} [:a]))
-          (= true (contains-multiple? {:a 1 :b 2} [:a :b]))
-          (= false (contains-multiple? {:a 1 :b 2} [:a :b :c]))))
-  (js/alert "Tests are failing!"))
-
-(comment
-  ; Use this as a playground for fiddling with the Paredit commands
-  (+ (+ 1) 2 3)
-
-  ; Tip: Think about moving the parens with paredit, not the values in the expression
-  ;
-  ; Barf Sexp Forward = Move right parens to the left
-  ; Slurp Sexp Forward = Move right parens to the right
-  ; Select Forward Sexp = Select current S-expression forwards
-  ; Select Backward Sexp = Select current S-expression backwards
-  )
-
