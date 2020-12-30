@@ -1,7 +1,22 @@
+/******************
+ * Misc
+ ******************/
 .pre-wrap {
   white-space: pre-wrap;
 }
 
+pre {
+  padding: 16px 0 36pxs;
+}
+
+.spacer {
+  height: 72px;
+  width: 100%;
+}
+
+/******************
+ * Timeline
+ ******************/
 .timeline {
   line-height: 1;
   margin-bottom: 24px;
@@ -90,21 +105,6 @@
   }
 }
 
-.wrapper {
-  max-width: 720px;
-  margin: auto;
-  padding: 0 36px;
-}
-
-pre {
-  padding: 16px 0 36pxs;
-}
-
-.spacer {
-  height: 72px;
-  width: 100%;
-}
-
 .timeline-background {
   display: flex;
   align-items: stretch;
@@ -117,6 +117,16 @@ pre {
   border-left: 1px solid grey;
   padding: 4px 8px 0 4px;
   font-size: 0.6em;
+}
+
+/******************
+ * Content
+ ******************/
+
+.wrapper {
+  max-width: 720px;
+  margin: auto;
+  padding: 0 36px;
 }
 
 .html-text .timeline-item {
@@ -134,6 +144,7 @@ pre {
   -webkit-animation: blink 1200ms infinite;
   animation: blink 1200ms infinite;
 }
+
 @-webkit-keyframes blink {
   50% {
     background-color: rgba(0, 230, 181, 0.3);
