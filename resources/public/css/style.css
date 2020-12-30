@@ -1,3 +1,111 @@
+/* CSS HEX */
+--maya-blue: #5cc8ffff;
+--charcoal: #424c55ff;
+--lavender-blush: #f5edf0ff;
+--ultra-red: #ef798aff;
+--old-burgundy: #3d2c2eff;
+
+/* CSS HSL */
+--maya-blue: hsla(200, 100%, 68%, 1);
+--charcoal: hsla(208, 13%, 30%, 1);
+--lavender-blush: hsla(338, 29%, 95%, 1);
+--ultra-red: hsla(351, 79%, 71%, 1);
+--old-burgundy: hsla(353, 16%, 21%, 1);
+
+/* SCSS HEX */
+$maya-blue: #5cc8ffff;
+$charcoal: #424c55ff;
+$lavender-blush: #f5edf0ff;
+$ultra-red: #ef798aff;
+$old-burgundy: #3d2c2eff;
+
+/* SCSS HSL */
+$maya-blue: hsla(200, 100%, 68%, 1);
+$charcoal: hsla(208, 13%, 30%, 1);
+$lavender-blush: hsla(338, 29%, 95%, 1);
+$ultra-red: hsla(351, 79%, 71%, 1);
+$old-burgundy: hsla(353, 16%, 21%, 1);
+
+/* SCSS RGB */
+$maya-blue: rgba(92, 200, 255, 1);
+$charcoal: rgba(66, 76, 85, 1);
+$lavender-blush: rgba(245, 237, 240, 1);
+$ultra-red: rgba(239, 121, 138, 1);
+$old-burgundy: rgba(61, 44, 46, 1);
+
+/* SCSS Gradient */
+$gradient-top: linear-gradient(
+  0deg,
+  #5cc8ffff,
+  #424c55ff,
+  #f5edf0ff,
+  #ef798aff,
+  #3d2c2eff
+);
+$gradient-right: linear-gradient(
+  90deg,
+  #5cc8ffff,
+  #424c55ff,
+  #f5edf0ff,
+  #ef798aff,
+  #3d2c2eff
+);
+$gradient-bottom: linear-gradient(
+  180deg,
+  #5cc8ffff,
+  #424c55ff,
+  #f5edf0ff,
+  #ef798aff,
+  #3d2c2eff
+);
+$gradient-left: linear-gradient(
+  270deg,
+  #5cc8ffff,
+  #424c55ff,
+  #f5edf0ff,
+  #ef798aff,
+  #3d2c2eff
+);
+$gradient-top-right: linear-gradient(
+  45deg,
+  #5cc8ffff,
+  #424c55ff,
+  #f5edf0ff,
+  #ef798aff,
+  #3d2c2eff
+);
+$gradient-bottom-right: linear-gradient(
+  135deg,
+  #5cc8ffff,
+  #424c55ff,
+  #f5edf0ff,
+  #ef798aff,
+  #3d2c2eff
+);
+$gradient-top-left: linear-gradient(
+  225deg,
+  #5cc8ffff,
+  #424c55ff,
+  #f5edf0ff,
+  #ef798aff,
+  #3d2c2eff
+);
+$gradient-bottom-left: linear-gradient(
+  315deg,
+  #5cc8ffff,
+  #424c55ff,
+  #f5edf0ff,
+  #ef798aff,
+  #3d2c2eff
+);
+$gradient-radial: radial-gradient(
+  #5cc8ffff,
+  #424c55ff,
+  #f5edf0ff,
+  #ef798aff,
+  #3d2c2eff
+);
+
 :root,
 [data-color-mode='light'] {
   --color-scale-black: #1b1f23;
