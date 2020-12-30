@@ -56,12 +56,14 @@
 
 (defn click-year [year-id scroll-on-click?]
   (fn [e]
-    (doseq [d (array-seq (.getElementsByClassName js/document "selected"))]
-      (babys-first-macro d)
-      (classlist/remove d "selected"))
+    ;; Remove .selected class from all elements to clean up state before
+    ;; making a new selection.
+    ;; Note: If you remove `vec`, this becomes buggy. So don't remove it. ;-)
+    (let [elems-with-selected-class (vec (array-seq (.getElementsByClassName js/document "selected")))]
+      (doseq [elem elems-with-selected-class]
+        (classlist/remove elem "selected")))
     (if-let [new-selection (.getElementById js/document year-id)]
       (do
-        (print (before-or-after-viewport year-id))
         (classlist/add new-selection "selected")
         (when scroll-on-click?
           (let [top-offset (- (.-offsetTop new-selection) 64)]
