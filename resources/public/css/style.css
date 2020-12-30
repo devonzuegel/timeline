@@ -38,7 +38,12 @@ pre {
   top: 16px;
   margin-left: -4px;
   cursor: pointer;
-  transition: all 30ms ease;
+  transition: all 100ms ease;
+}
+
+.point:hover {
+  background-color: black;
+  transition: all 100ms ease;
 }
 
 .point.selected {
@@ -158,4 +163,48 @@ pre {
 .html-text .timeline-item.selected,
 .html-text .timeline-item.selected:hover {
   transition: all 150ms ease;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+html,
+body {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+:focus {
+  outline: none;
+}
+
+.effect-1-wrapper {
+  display: grid;
+}
+
+.effect-1-wrapper * {
+  grid-column: 1;
+  grid-row: 1;
+}
+.effect-1 {
+  border: 0;
+  padding: 7px 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.focus-border {
+  width: 0;
+  height: 2px;
+  background-color: #3399ff;
+  transition: 0.4s;
+  align-self: end;
+}
+
+.effect-1:focus ~ .focus-border {
+  width: 100%;
+  transition: 0.4s;
+}
+
+.effect-1-wrapper {
+  height: fit-content;
 }

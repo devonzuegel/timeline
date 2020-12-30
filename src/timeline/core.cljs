@@ -132,8 +132,14 @@
       [:div {:class "timeline"}
        (render-timeline-background years)
        (map-indexed (render-year-fn years (:selected-date-id state)) years)]
+
       [:div {:class "spacer"}]
       [:div {:class "wrapper"}
+       [:div {:class "effect-1-wrapper"}
+        [:input {:class "effect-1"}]
+        [:span {:class "focus-border"}]]
+
+       [:div {:class "spacer"}]
        [:pre (with-out-str (pp/pprint state))]
        [:div {:class "html-text" :dangerouslySetInnerHTML {:__html example-text}}]]
       [:div {:class "spacer"}]])))
