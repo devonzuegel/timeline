@@ -50,9 +50,9 @@
 (defn before-or-after-viewport [element-id]
   (let [element-offset (.-offsetTop (.getElementById js/document element-id))]
     (cond
-      (< element-offset (get-scroll-top)) -1
-      (< element-offset (+ (get-scroll-top) (get-viewport-height))) 0
-      :else 1)))
+      (< element-offset (get-scroll-top)) :before-viewport
+      (< element-offset (+ (get-scroll-top) (get-viewport-height))) :in-viewport
+      :else :after-viewport)))
 
 (defn click-year [year-id scroll-on-click?]
   (fn [e]
