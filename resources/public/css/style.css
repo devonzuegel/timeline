@@ -136,36 +136,34 @@ pre {
 
 .html-text .timeline-item {
   color: #444;
-  padding: 0px 1px;
-  margin: 0px 2px 0 -1px;
   border-bottom: 2px dotted #bbb;
   font-weight: 600;
   cursor: pointer;
 }
 
-// .html-text .timeline-item:hover {
-//   color: black;
-//   border-bottom: 2px dotted rgb(117, 111, 111);
-// }
+.html-text .timeline-item:hover {
+  color: black;
+  // border-bottom: 2px dotted rgb(117, 111, 111);
+}
 
-// .html-text .timeline-item.selected {
-//   color: #444;
-//   // border-bottom: 2px solid #555;
-//   border-bottom: 2px solid rgba(0,0,0,0);
-// }
+.html-text .timeline-item.selected {
+  color: #444;
+  // border-bottom: 2px solid #555;
+  // border-bottom: 2px solid black;
+}
 
-// .html-text .timeline-item.selected:hover {
-//   color: black;
-//   // border-bottom: 2px solid black;
-//   border-bottom: 2px solid rgba(0,0,0,0);
-// }
+.html-text .timeline-item.selected:hover {
+  color: black;
+  // border-bottom: 2px solid black;
+  // border-bottom: 2px solid black;
+}
 
-// .html-text .timeline-item,
-// .html-text .timeline-item:hover,
-// .html-text .timeline-item.selected,
-// .html-text .timeline-item.selected:hover {
-//   transition: all 150ms ease;
-// }
+.html-text .timeline-item,
+.html-text .timeline-item:hover,
+.html-text .timeline-item.selected,
+.html-text .timeline-item.selected:hover {
+  transition: all 150ms ease;
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -184,23 +182,21 @@ pre {
   grid-row: 1;
 }
 
-.effect-1 {
-  // border: 0;
-  // padding: 7px 0;
-  // transition: 2s;
+.focus-border {
+  height: 2px;
+  background-color: #555;
+  opacity: 0;
+  align-self: end;
+  transition: all 200ms ease-in;
+  width: 0%;
 }
 
-.effect-1:not(.selected) + .focus-border {
-  height: 2px;
-  background-color: blue;
-  align-self: end;
-  transition: all 2s;
-  width: 10%;
+.effect-1:hover + .focus-border {
+  background-color: black;
 }
 
 .effect-1.selected + .focus-border {
-  background-color: rgba(255, 0, 0, 0.737) !important;
   width: 100%;
-  padding-top: 10px;
-  transition: all 2s;
+  opacity: 1;
+  transition: all 200ms ease-in;
 }

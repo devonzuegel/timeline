@@ -54,12 +54,12 @@
       (< element-offset (+ (get-scroll-top) (get-viewport-height))) :in-viewport
       :else :after-viewport)))
 
-(defn create-button  [wrapper-id]
+(defn create-button []
   ;; We can save the response of a js interop function call
   ;;=> var btn = document.createElement("button")
   (let [btn (.createElement js/document "div")]
     ;; (set! (.-innerText btn) "Click Me")
-    (set! (.-id btn) wrapper-id)
+    (set! (.-id btn))
     (classlist/add btn "effect-1-wrapper")
     ;; (dom/appendChild btn (.createElement js/document new-selection))
     ;; (babys-first-macro btn)
@@ -80,16 +80,6 @@
     (if-let [new-selection (.getElementById js/document year-id)]
       (do
         (classlist/add new-selection "selected")
-        (classlist/add new-selection "effect-1")
-        (let [btn (create-button (str year-id "--wrapper"))]
-          (dom/insertSiblingAfter btn new-selection)
-          (let [removed (dom/removeNode new-selection)]
-            (babys-first-macro btn)
-            (babys-first-macro removed)
-            (dom/appendChild btn removed)
-            (let [focus-border (.createElement js/document "span")]
-              (dom/appendChild btn focus-border)
-              (classlist/add focus-border "focus-border"))))
         (when scroll-on-click?
           (let [top-offset (- (.-offsetTop new-selection) 64)]
             (.play (fx-dom/Scroll.
@@ -143,10 +133,20 @@
                            {:id (get-id-from-inline-date-tag d)
                             :year-number (get-date-from-inline-date-tag d)}))]
       (swap! app-state -update-years years))
-    (doseq [d inline-date-tags]
+    (doseq [date-tag inline-date-tags]
       (.addEventListener
-       d "click"
-       (click-year (get-id-from-inline-date-tag d) false) false))))
+       date-tag "click"
+       (click-year (get-id-from-inline-date-tag date-tag) false) false)
+      (classlist/add date-tag "effect-1")
+      (let [btn (create-button)]
+        (dom/insertSiblingAfter btn date-tag)
+        (let [removed (dom/removeNode date-tag)]
+          (babys-first-macro btn)
+          (babys-first-macro removed)
+          (dom/appendChild btn removed)
+          (let [focus-border (.createElement js/document "span")]
+            (dom/appendChild btn focus-border)
+            (classlist/add focus-border "focus-border")))))))
 
 (rum/defc hello-world <
   rum/reactive {:did-mount fetch-years}
