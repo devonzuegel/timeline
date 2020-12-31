@@ -155,7 +155,10 @@
        (render-timeline-background years)
        (map-indexed (render-year-fn years (:selected-year-id state)) years)]
 
+      ; TODO: Show this only when hovering over a timeline dot
+      ; TODO: Handle the up case (right now just handling the down)
       [:div {:class "wrapper"}
+       [:div {:class "container"} [:div {:class "arrow bounce"} "↓"]]
 
        [:div {:class "spacer"}]
        [:pre (with-out-str (pp/pprint state))]
