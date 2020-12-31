@@ -55,17 +55,9 @@
       :else :after-viewport)))
 
 (defn create-button []
-  ;; We can save the response of a js interop function call
-  ;;=> var btn = document.createElement("button")
   (let [btn (.createElement js/document "div")]
-    ;; (set! (.-innerText btn) "Click Me")
     (set! (.-id btn))
     (classlist/add btn "effect-1-wrapper")
-    ;; (dom/appendChild btn (.createElement js/document new-selection))
-    ;; (babys-first-macro btn)
-    ;; (babys-first-macro new-selection)
-
-    ;; return btn
     btn))
 
 (defn click-year [year-id scroll-on-click?]
@@ -160,25 +152,13 @@
 
       [:div {:class "spacer"}]
       [:div {:class "wrapper"}
-      ;;  [:div {:class "effect-1-wrapper"}
-      ;;   [:input {:class "effect-1"}]
-      ;;   [:div {:class "focus-border"}]]
 
        [:div {:class "spacer"}]
        [:pre (with-out-str (pp/pprint state))]
        [:div {:class "html-text" :dangerouslySetInnerHTML {:__html example-text}}]]
       [:div {:class "spacer"}]])))
 
-; Here's how you use JS's dot operator
 (rum/mount (hello-world) (. js/document (getElementById "app")))
-
-(comment ; A place to store useful tidbits
-  (println "mounted!" (js/Date))
-
-  ; Fetch ids
-  (print (for [d inline-date-tags]
-           [(get-date-from-inline-date-tag d)
-            (.-id d)])))
 
 ; Footnotes:
 ; ----------
