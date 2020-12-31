@@ -54,17 +54,42 @@
       (< element-offset (+ (get-scroll-top) (get-viewport-height))) :in-viewport
       :else :after-viewport)))
 
+(defn create-button  [wrapper-id]
+  ;; We can save the response of a js interop function call
+  ;;=> var btn = document.createElement("button")
+  (let [btn (.createElement js/document "div")]
+    ;; (set! (.-innerText btn) "Click Me")
+    (set! (.-id btn) wrapper-id)
+    (classlist/add btn "effect-1-wrapper")
+    ;; (dom/appendChild btn (.createElement js/document new-selection))
+    ;; (babys-first-macro btn)
+    ;; (babys-first-macro new-selection)
+
+    ;; return btn
+    btn))
+
 (defn click-year [year-id scroll-on-click?]
   (fn [e]
-    ;; Remove .selected class from all elements to clean up state before
-    ;; making a new selection.
-    ;; Note: If you remove `vec`, this becomes buggy. So don't remove it. ;-)
+    ; Remove .selected class from all elements to clean up state before
+    ; making a new selection.
+    ; Note: If you remove `vec`, this becomes buggy. So don't remove it. ;-)
     (let [elems-with-selected-class (vec (array-seq (.getElementsByClassName js/document "selected")))]
       (doseq [elem elems-with-selected-class]
         (classlist/remove elem "selected")))
+    ; Add .selected class to new selection
     (if-let [new-selection (.getElementById js/document year-id)]
       (do
         (classlist/add new-selection "selected")
+        (classlist/add new-selection "effect-1")
+        (let [btn (create-button (str year-id "--wrapper"))]
+          (dom/insertSiblingAfter btn new-selection)
+          (let [removed (dom/removeNode new-selection)]
+            (babys-first-macro btn)
+            (babys-first-macro removed)
+            (dom/appendChild btn removed)
+            (let [focus-border (.createElement js/document "span")]
+              (dom/appendChild btn focus-border)
+              (classlist/add focus-border "focus-border"))))
         (when scroll-on-click?
           (let [top-offset (- (.-offsetTop new-selection) 64)]
             (.play (fx-dom/Scroll.
@@ -135,9 +160,9 @@
 
       [:div {:class "spacer"}]
       [:div {:class "wrapper"}
-       [:div {:class "effect-1-wrapper"}
-        [:input {:class "effect-1"}]
-        [:span {:class "focus-border"}]]
+      ;;  [:div {:class "effect-1-wrapper"}
+      ;;   [:input {:class "effect-1"}]
+      ;;   [:div {:class "focus-border"}]]
 
        [:div {:class "spacer"}]
        [:pre (with-out-str (pp/pprint state))]
