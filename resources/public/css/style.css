@@ -171,32 +171,32 @@ pre {
   outline: none;
 }
 
-.effect-1-wrapper {
+.animated-link--wrapper {
   display: inline-grid;
   width: fit-content;
   height: fit-content;
 }
 
-.effect-1-wrapper * {
+.animated-link--wrapper * {
   grid-column: 1;
   grid-row: 1;
 }
 
-.focus-border {
+.animated-link--border {
   height: 2px;
   background-color: #555;
   opacity: 0;
   align-self: end;
-  transition: all 200ms ease-in;
+  transition: all 150ms ease-in;
   width: 0%;
 }
 
-.effect-1:hover + .focus-border {
+.animated-link--link:hover + .animated-link--border {
   background-color: black;
 }
 
-.effect-1.selected + .focus-border {
+.animated-link--link.selected + .animated-link--border {
   width: 100%;
   opacity: 1;
-  transition: all 200ms ease-in;
+  transition: all 150ms ease-in;
 }

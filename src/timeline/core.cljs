@@ -15,16 +15,16 @@
 
 ;; define your app data so that doesn't get over-written on reload
 (defonce app-state
-  (atom {:selected-date-id nil
+  (atom {:selected-year-id nil
          :years nil}))
 
 (defn -update-years [current-app-state years]
   (assoc-in current-app-state [:years] years)) ;; No need to deref it
 
-(defn get-date-from-inline-date-tag [date-tag]
+(defn get-year-from-inline-year-tag [date-tag]
   (int (.-innerText date-tag)))
 
-(defn get-id-from-inline-date-tag [date-tag]
+(defn get-id-from-inline-year-tag [date-tag]
   (str (.-id date-tag)))
 
 (defn get-percent [y -min-year -max-year]
@@ -34,10 +34,10 @@
 (defn get-adjusted-percent [y -min-year -max-year]
   (+ 2 (* (get-percent y -min-year -max-year) .9)))
 
-(defn -update-selected-date-id [current-app-state new-date]
-  (assoc-in current-app-state [:selected-date-id] new-date)) ;; No need to deref it
+(defn -update-selected-year-id [current-app-state new-year]
+  (assoc-in current-app-state [:selected-year-id] new-year)) ;; No need to deref it
 
-(defn update-selected-date-id [e] (swap! app-state -update-selected-date-id "foooo"))
+(defn update-selected-year-id [e] (swap! app-state -update-selected-year-id "foooo"))
 
 (defn get-scroll-top "Current scroll position" [] (.-y (dom/getDocumentScroll)))
 
@@ -53,12 +53,6 @@
       (< element-offset (get-scroll-top)) :before-viewport
       (< element-offset (+ (get-scroll-top) (get-viewport-height))) :in-viewport
       :else :after-viewport)))
-
-(defn create-button []
-  (let [btn (.createElement js/document "div")]
-    (set! (.-id btn))
-    (classlist/add btn "effect-1-wrapper")
-    btn))
 
 (defn click-year [year-id scroll-on-click?]
   (fn [e]
@@ -79,7 +73,7 @@
                     #js [0 (get-scroll-top)]
                     #js [0 top-offset]
                     150))))))
-    (swap! app-state -update-selected-date-id year-id)))
+    (swap! app-state -update-selected-year-id year-id)))
 
 (defn contains-multiple? [m keys] (every? #(contains? m %) keys))
 
@@ -89,7 +83,7 @@
    (string? (:id y))
    (number? (:year-number y))))
 
-(defn render-year-fn [years selected-date-id] ; Curry the function based on entire range of years
+(defn render-year-fn [years selected-year-id] ; Curry the function based on entire range of years
   {:pre [(every? is-year-map? years)]}
   (fn [i year]
     (let [min-year (:year-number (first years))
@@ -98,7 +92,7 @@
           year-number (:year-number year)
           point-id (str year-id "--point")]
       [:span
-       {:class ["point" (when (= year-id selected-date-id) "selected")] ; TODO: Consider using flexbox instead
+       {:class ["point" (when (= year-id selected-year-id) "selected")] ; TODO: Consider using flexbox instead
         :key point-id
         :id point-id
         :on-click (click-year year-id true)
@@ -106,7 +100,7 @@
 
        ; TODO: Clean up this logic
        ; TODO: Handle the onclick
-       (when (= year-id selected-date-id)
+       (when (= year-id selected-year-id)
          [:div {:class "pulsating-dot"}
           [:div {:class "dot"}]
           [:div {:class "pulse"}]])])))
@@ -118,39 +112,49 @@
      (map (fn [x] [:span x])
           (range min-year (+ 1 max-year)))]))
 
-(defn fetch-years [] ; Build up `years` variable and put it in the atom
-  (let [inline-date-tags (array-seq (.getElementsByClassName js/document "timeline-item"))]
-    (let [years (sort-by :year-number
-                         (for [d inline-date-tags]
-                           {:id (get-id-from-inline-date-tag d)
-                            :year-number (get-date-from-inline-date-tag d)}))]
-      (swap! app-state -update-years years))
-    (doseq [date-tag inline-date-tags]
+(defn animated-inline-year []
+  (let [animated-year-tag (.createElement js/document "div")]
+    (set! (.-id animated-year-tag))
+    (classlist/add animated-year-tag "animated-link--wrapper")
+    animated-year-tag))
+
+(defn sort-years [inline-year-tags]
+  (sort-by :year-number
+           (for [d inline-year-tags]
+             {:id (get-id-from-inline-year-tag d)
+              :year-number (get-year-from-inline-year-tag d)})))
+
+(defn initialize-years [] ; Build up `years` variable and put it in the atom
+  (let [inline-year-tags (array-seq (.getElementsByClassName js/document "timeline-item"))]
+    ; Add `years` to the app state
+    (swap! app-state -update-years (sort-years inline-year-tags))
+    ; Initialize each inline date tag
+    (doseq [original-year-tag inline-year-tags]
+      ; Add on-click callback
       (.addEventListener
-       date-tag "click"
-       (click-year (get-id-from-inline-date-tag date-tag) false) false)
-      (classlist/add date-tag "effect-1")
-      (let [btn (create-button)]
-        (dom/insertSiblingAfter btn date-tag)
-        (let [removed (dom/removeNode date-tag)]
-          (babys-first-macro btn)
-          (babys-first-macro removed)
-          (dom/appendChild btn removed)
-          (let [focus-border (.createElement js/document "span")]
-            (dom/appendChild btn focus-border)
-            (classlist/add focus-border "focus-border")))))))
+       original-year-tag "click"
+       (click-year (get-id-from-inline-year-tag original-year-tag) false) false)
+      ; Add border animation
+      (let [animated-year-tag (animated-inline-year)]
+        (classlist/add original-year-tag "animated-link--link")
+        (dom/insertSiblingAfter animated-year-tag original-year-tag)
+        ; Wrap the original node so that the border is animated
+        (let [removed (dom/removeNode original-year-tag)]
+          (dom/appendChild animated-year-tag removed)
+          (let [animated-link--border (.createElement js/document "span")]
+            (dom/appendChild animated-year-tag animated-link--border)
+            (classlist/add animated-link--border "animated-link--border")))))))
 
 (rum/defc hello-world <
-  rum/reactive {:did-mount fetch-years}
+  rum/reactive {:did-mount initialize-years}
   ([]
    (let [state (rum/react app-state) ; * Comment below
          years (:years state)]
      [:div
       [:div {:class "timeline"}
        (render-timeline-background years)
-       (map-indexed (render-year-fn years (:selected-date-id state)) years)]
+       (map-indexed (render-year-fn years (:selected-year-id state)) years)]
 
-      [:div {:class "spacer"}]
       [:div {:class "wrapper"}
 
        [:div {:class "spacer"}]
