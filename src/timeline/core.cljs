@@ -112,11 +112,19 @@
      (map (fn [x] [:span x])
           (range min-year (+ 1 max-year)))]))
 
-(defn animated-inline-year []
-  (let [animated-year-tag (.createElement js/document "div")]
-    (set! (.-id animated-year-tag))
-    (classlist/add animated-year-tag "animated-link--wrapper")
-    animated-year-tag))
+(defn animated-inline-year [original-year-tag]
+  (let [new-animated-year-tag (.createElement js/document "div")]
+    (set! (.-id new-animated-year-tag))
+    (classlist/add new-animated-year-tag "animated-link--wrapper")
+    (classlist/add original-year-tag "animated-link--link")
+    (dom/insertSiblingAfter new-animated-year-tag original-year-tag)
+    ; Wrap the original node so that the border is animated
+    (let [removed (dom/removeNode original-year-tag)]
+      (dom/appendChild new-animated-year-tag removed)
+      (let [animated-link--border (.createElement js/document "span")]
+        (dom/appendChild new-animated-year-tag animated-link--border)
+        (classlist/add animated-link--border "animated-link--border")))
+    new-animated-year-tag))
 
 (defn sort-years [inline-year-tags]
   (sort-by :year-number
@@ -135,15 +143,7 @@
        original-year-tag "click"
        (click-year (get-id-from-inline-year-tag original-year-tag) false) false)
       ; Add border animation
-      (let [animated-year-tag (animated-inline-year)]
-        (classlist/add original-year-tag "animated-link--link")
-        (dom/insertSiblingAfter animated-year-tag original-year-tag)
-        ; Wrap the original node so that the border is animated
-        (let [removed (dom/removeNode original-year-tag)]
-          (dom/appendChild animated-year-tag removed)
-          (let [animated-link--border (.createElement js/document "span")]
-            (dom/appendChild animated-year-tag animated-link--border)
-            (classlist/add animated-link--border "animated-link--border")))))))
+      (animated-inline-year original-year-tag))))
 
 (rum/defc hello-world <
   rum/reactive {:did-mount initialize-years}
