@@ -19,7 +19,7 @@
          :years nil}))
 
 (defn -update-years [current-app-state years]
-  (assoc-in current-app-state [:years] years)) ;; No need to deref it
+  (assoc current-app-state :years years)) ;; No need to deref it
 
 (defn get-year-from-inline-year-tag [date-tag]
   (int (.-innerText date-tag)))
@@ -27,23 +27,20 @@
 (defn get-id-from-inline-year-tag [date-tag]
   (str (.-id date-tag)))
 
-(defn get-percent [y -min-year -max-year]
-  (* 100  (divide (- y -min-year) (- -max-year -min-year))))
+(defn get-percent [y min-year max-year]
+  (* 100  (divide (- y min-year) (- max-year min-year))))
 
 ; Ajust so the timeline only takes 90% of the screen
-(defn get-adjusted-percent [y -min-year -max-year]
-  (+ 2 (* (get-percent y -min-year -max-year) .9)))
+(defn get-adjusted-percent [y min-year max-year]
+  (+ 2 (* (get-percent y min-year max-year) .9)))
 
-(defn -update-selected-year-id [current-app-state new-year]
-  (assoc-in current-app-state [:selected-year-id] new-year)) ;; No need to deref it
-
-(defn update-selected-year-id [e] (swap! app-state -update-selected-year-id "foooo"))
+(defn update-selected-year-id [current-app-state new-year]
+  (assoc current-app-state :selected-year-id new-year)) ;; No need to deref it
 
 (defn get-scroll-top "Current scroll position" [] (.-y (dom/getDocumentScroll)))
 
 (defn get-viewport-height []
   (let [width-and-height (js->clj (.values js/Object (dom/getViewportSize)))
-        width (first width-and-height)
         height (second width-and-height)]
     height))
 
@@ -73,7 +70,7 @@
                     #js [0 (get-scroll-top)]
                     #js [0 top-offset]
                     150))))))
-    (swap! app-state -update-selected-year-id year-id)))
+    (swap! app-state update-selected-year-id year-id)))
 
 (defn contains-multiple? [m keys] (every? #(contains? m %) keys))
 
@@ -128,9 +125,9 @@
 
 (defn sort-years [inline-year-tags]
   (sort-by :year-number
-           (for [d inline-year-tags]
-             {:id (get-id-from-inline-year-tag d)
-              :year-number (get-year-from-inline-year-tag d)})))
+           (for [year-tag inline-year-tags]
+             {:id (get-id-from-inline-year-tag year-tag)
+              :year-number (get-year-from-inline-year-tag year-tag)})))
 
 (defn initialize-years [] ; Build up `years` variable and put it in the atom
   (let [inline-year-tags (array-seq (.getElementsByClassName js/document "timeline-item"))]
@@ -159,7 +156,6 @@
       ; TODO: Handle the up case (right now just handling the down)
       [:div {:class "wrapper"}
        [:div {:class "container"} [:div {:class "arrow bounce"} "↓"]]
-
        [:div {:class "spacer"}]
        [:pre (with-out-str (pp/pprint state))]
        [:div {:class "html-text" :dangerouslySetInnerHTML {:__html example-text}}]]
