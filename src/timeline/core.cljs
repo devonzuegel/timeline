@@ -176,10 +176,10 @@
       ; TODO: Handle the up case (right now just handling the down)
       [:div {:class "wrapper"}
        (let [relative-to-viewport (hovered-year-relative-to-viewport state)
-             arrow (cond
-                     (= relative-to-viewport :before-viewport) "↑"
-                     (= relative-to-viewport :after-viewport) "↓"
-                     :else nil)]
+             arrow (case relative-to-viewport
+                     :before-viewport "↑"
+                     :after-viewport "↓"
+                     nil)]
          (babys-first-macro relative-to-viewport)
          (babys-first-macro arrow)
          [:div {:class "container"} [:div {:class "arrow bounce"} arrow]])
