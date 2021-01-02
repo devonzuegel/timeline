@@ -155,6 +155,13 @@
       ; Add border animation
       (animated-inline-year original-year-tag))))
 
+(defn hovered-year-relative-to-viewport [state]
+  (let [year-id (:hovered-year-id state)]
+    (babys-first-macro year-id)
+    (if (nil? year-id)
+      nil ; Nothing is hovered
+      (before-or-after-viewport year-id))))
+
 (rum/defc hello-world <
   rum/reactive {:did-mount initialize-years}
   ([]
@@ -168,7 +175,14 @@
       ; TODO: Show this only when hovering over a timeline dot
       ; TODO: Handle the up case (right now just handling the down)
       [:div {:class "wrapper"}
-       [:div {:class "container"} [:div {:class "arrow bounce"} "↓"]]
+       (let [relative-to-viewport (hovered-year-relative-to-viewport state)
+             arrow (cond
+                     (= relative-to-viewport :before-viewport) "↑"
+                     (= relative-to-viewport :after-viewport) "↓"
+                     :else nil)]
+         (babys-first-macro relative-to-viewport)
+         (babys-first-macro arrow)
+         [:div {:class "container"} [:div {:class "arrow bounce"} arrow]])
        [:div {:class "spacer"}]
        [:pre (with-out-str (pp/pprint state))]
        [:div {:class "html-text" :dangerouslySetInnerHTML {:__html example-text}}]]
