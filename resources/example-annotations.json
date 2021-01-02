@@ -1,0 +1,767 @@
+[
+  {
+    "_id": "5ff0002cdbdb5300172bc004",
+    "annotations": [
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "purpose": "time-annotation",
+            "value": "1769-08-15T07:52:58.000Z",
+            "timeSelectionType": "date"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "15 August 1769"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 371,
+              "end": 385
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#4713f212-47ba-45ca-ac48-5184f213c880"
+      },
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "purpose": "time-annotation",
+            "value": "1785-10-28T07:52:58.000Z",
+            "timeSelectionType": "date"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "28 October 1785"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 1180,
+              "end": 1195
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#e7f6964e-a38a-459e-8161-208814e0df02"
+      },
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "purpose": "time-annotation",
+            "value": "1772-01-05T07:52:58.000Z",
+            "timeSelectionType": "date"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "General on 16 October 1795"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 3221,
+              "end": 3247
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#dce76951-158a-4445-bb29-7f1f2a861f80"
+      }
+    ],
+    "url": "https://www.napoleon.org/en/young-historians/napodoc/timeline-consulate1st-french-empire/",
+    "_createdOn": "2021-01-02T05:10:04.802Z"
+  },
+  {
+    "_id": "5ff00025dbdb5300172bc003",
+    "annotations": [
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "purpose": "time-annotation",
+            "value": "1769-08-15T07:52:58.000Z",
+            "timeSelectionType": "date"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "15 August 1769"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 371,
+              "end": 385
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#4713f212-47ba-45ca-ac48-5184f213c880"
+      },
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "purpose": "time-annotation",
+            "value": "1785-10-28T07:52:58.000Z",
+            "timeSelectionType": "date"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "28 October 1785"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 1180,
+              "end": 1195
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#e7f6964e-a38a-459e-8161-208814e0df02"
+      },
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "purpose": "time-annotation",
+            "value": "1772-01-05T07:52:58.000Z",
+            "timeSelectionType": "date"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "General on 16 October 1795"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 3221,
+              "end": 3247
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#dce76951-158a-4445-bb29-7f1f2a861f80"
+      }
+    ],
+    "url": "https://www.napoleon.org/en/young-historians/napodoc/timeline-consulate1st-french-empire/",
+    "_createdOn": "2021-01-02T05:09:57.685Z"
+  },
+  {
+    "_id": "5ff00022dbdb5300172bc002",
+    "annotations": [
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "purpose": "time-annotation",
+            "value": "1769-08-15T07:52:58.000Z",
+            "timeSelectionType": "date"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "15 August 1769"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 371,
+              "end": 385
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#4713f212-47ba-45ca-ac48-5184f213c880"
+      },
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "purpose": "time-annotation",
+            "value": "1785-10-28T07:52:58.000Z",
+            "timeSelectionType": "date"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "28 October 1785"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 1180,
+              "end": 1195
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#e7f6964e-a38a-459e-8161-208814e0df02"
+      },
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "purpose": "time-annotation",
+            "value": "1772-01-05T07:52:58.000Z",
+            "timeSelectionType": "date"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "General on 16 October 1795"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 3221,
+              "end": 3247
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#dce76951-158a-4445-bb29-7f1f2a861f80"
+      }
+    ],
+    "url": "https://www.napoleon.org/en/young-historians/napodoc/timeline-consulate1st-french-empire/",
+    "_createdOn": "2021-01-02T05:09:54.275Z"
+  },
+  {
+    "_id": "5fee50811a15f800171c0e3a",
+    "annotations": [
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "purpose": "time-annotation",
+            "value": "1769-08-15T07:52:58.000Z",
+            "timeSelectionType": "date"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "15 August 1769"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 371,
+              "end": 385
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#4713f212-47ba-45ca-ac48-5184f213c880"
+      },
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "purpose": "time-annotation",
+            "value": "1785-10-28T07:52:58.000Z",
+            "timeSelectionType": "date"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "28 October 1785"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 1180,
+              "end": 1195
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#e7f6964e-a38a-459e-8161-208814e0df02"
+      },
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "purpose": "time-annotation",
+            "value": "1772-01-05T07:52:58.000Z",
+            "timeSelectionType": "date"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "General on 16 October 1795"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 3221,
+              "end": 3247
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#dce76951-158a-4445-bb29-7f1f2a861f80"
+      }
+    ],
+    "url": "https://www.napoleon.org/en/young-historians/napodoc/timeline-consulate1st-french-empire/",
+    "_createdOn": "2020-12-31T22:28:17.980Z"
+  },
+  {
+    "_id": "5fee506f1a15f800171c0e35",
+    "annotations": [
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "purpose": "time-annotation",
+            "value": "1769-08-15T07:52:58.000Z",
+            "timeSelectionType": "date"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "15 August 1769"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 371,
+              "end": 385
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#4713f212-47ba-45ca-ac48-5184f213c880"
+      },
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "purpose": "time-annotation",
+            "value": "1785-10-28T07:52:58.000Z",
+            "timeSelectionType": "date"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "28 October 1785"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 1180,
+              "end": 1195
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#e7f6964e-a38a-459e-8161-208814e0df02"
+      },
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "purpose": "time-annotation",
+            "value": "1772-01-05T07:52:58.000Z",
+            "timeSelectionType": "date"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "General on 16 October 1795"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 3221,
+              "end": 3247
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#dce76951-158a-4445-bb29-7f1f2a861f80"
+      }
+    ],
+    "url": "https://www.napoleon.org/en/young-historians/napodoc/timeline-consulate1st-french-empire/",
+    "_createdOn": "2020-12-31T22:27:59.934Z"
+  },
+  {
+    "_id": "5fee506a1a15f800171c0e34",
+    "annotations": [
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "purpose": "time-annotation",
+            "value": "1769-08-15T07:52:58.000Z",
+            "timeSelectionType": "date"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "15 August 1769"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 371,
+              "end": 385
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#4713f212-47ba-45ca-ac48-5184f213c880"
+      },
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "purpose": "time-annotation",
+            "value": "1785-10-28T07:52:58.000Z",
+            "timeSelectionType": "date"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "28 October 1785"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 1180,
+              "end": 1195
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#e7f6964e-a38a-459e-8161-208814e0df02"
+      },
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "purpose": "time-annotation",
+            "value": "1772-01-05T07:52:58.000Z",
+            "timeSelectionType": "date"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "General on 16 October 1795"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 3221,
+              "end": 3247
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#dce76951-158a-4445-bb29-7f1f2a861f80"
+      }
+    ],
+    "url": "https://www.napoleon.org/en/young-historians/napodoc/timeline-consulate1st-french-empire/",
+    "_createdOn": "2020-12-31T22:27:54.286Z"
+  },
+  {
+    "_id": "5fee50691a15f800171c0e33",
+    "annotations": [
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "purpose": "time-annotation",
+            "value": "1769-08-15T07:52:58.000Z",
+            "timeSelectionType": "date"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "15 August 1769"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 371,
+              "end": 385
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#4713f212-47ba-45ca-ac48-5184f213c880"
+      },
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "purpose": "time-annotation",
+            "value": "1785-10-28T07:52:58.000Z",
+            "timeSelectionType": "date"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "28 October 1785"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 1180,
+              "end": 1195
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#e7f6964e-a38a-459e-8161-208814e0df02"
+      },
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "purpose": "time-annotation",
+            "value": "1772-01-05T07:52:58.000Z",
+            "timeSelectionType": "date"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "General on 16 October 1795"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 3221,
+              "end": 3247
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#dce76951-158a-4445-bb29-7f1f2a861f80"
+      }
+    ],
+    "url": "https://www.napoleon.org/en/young-historians/napodoc/timeline-consulate1st-french-empire/",
+    "_createdOn": "2020-12-31T22:27:53.159Z"
+  },
+  {
+    "_id": "5fee50641a15f800171c0e32",
+    "annotations": [
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "purpose": "time-annotation",
+            "value": "1769-08-15T07:52:58.000Z",
+            "timeSelectionType": "date"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "15 August 1769"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 371,
+              "end": 385
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#4713f212-47ba-45ca-ac48-5184f213c880"
+      },
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "purpose": "time-annotation",
+            "value": "1785-10-28T07:52:58.000Z",
+            "timeSelectionType": "date"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "28 October 1785"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 1180,
+              "end": 1195
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#e7f6964e-a38a-459e-8161-208814e0df02"
+      },
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "purpose": "time-annotation",
+            "value": "1772-01-05T07:52:58.000Z",
+            "timeSelectionType": "date"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "General on 16 October 1795"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 3221,
+              "end": 3247
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#dce76951-158a-4445-bb29-7f1f2a861f80"
+      }
+    ],
+    "url": "https://www.napoleon.org/en/young-historians/napodoc/timeline-consulate1st-french-empire/",
+    "_createdOn": "2020-12-31T22:27:48.192Z"
+  },
+  {
+    "_id": "5fee50301a15f800171c0e30",
+    "annotations": [
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "purpose": "time-annotation",
+            "value": "1769-08-15T07:52:58.000Z",
+            "timeSelectionType": "date"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "15 August 1769"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 371,
+              "end": 385
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#4713f212-47ba-45ca-ac48-5184f213c880"
+      },
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "purpose": "time-annotation",
+            "value": "1785-10-28T07:52:58.000Z",
+            "timeSelectionType": "date"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "28 October 1785"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 1180,
+              "end": 1195
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#e7f6964e-a38a-459e-8161-208814e0df02"
+      },
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "purpose": "time-annotation",
+            "value": "1772-01-05T07:52:58.000Z",
+            "timeSelectionType": "date"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "General on 16 October 1795"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 3221,
+              "end": 3247
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#dce76951-158a-4445-bb29-7f1f2a861f80"
+      }
+    ],
+    "url": "https://www.napoleon.org/en/young-historians/napodoc/timeline-consulate1st-french-empire/",
+    "_createdOn": "2020-12-31T22:26:56.579Z"
+  }
+]

@@ -16,6 +16,7 @@
 ;; define your app data so that doesn't get over-written on reload
 (defonce app-state
   (atom {:selected-year-id nil
+         :hovered-year-id nil
          :years nil}))
 
 (defn -update-years [current-app-state years]
@@ -34,8 +35,18 @@
 (defn get-adjusted-percent [y min-year max-year]
   (+ 2 (* (get-percent y min-year max-year) .9)))
 
-(defn update-selected-year-id [current-app-state new-year]
-  (assoc current-app-state :selected-year-id new-year)) ;; No need to deref it
+(defn -update-selected-year-id [current-app-state year-id]
+  ;; No need to deref it
+  (assoc current-app-state :selected-year-id year-id))
+
+(defn update-selected-year-id [year-id]
+  (swap! app-state -update-selected-year-id year-id))
+
+(defn -update-hovered-year-id [current-app-state year-id]
+  (assoc current-app-state :hovered-year-id year-id))
+
+(defn update-hovered-year-id [year-id]
+  (swap! app-state -update-hovered-year-id year-id))
 
 (defn get-scroll-top "Current scroll position" [] (.-y (dom/getDocumentScroll)))
 
@@ -65,12 +76,13 @@
         (classlist/add new-selection "selected")
         (when scroll-on-click?
           (let [top-offset (- (.-offsetTop new-selection) 64)]
+            ; TODO: Only scroll when the inline element is off screen
             (.play (fx-dom/Scroll.
                     (dom/getDocumentScrollElement)
                     #js [0 (get-scroll-top)]
                     #js [0 top-offset]
                     150))))))
-    (swap! app-state update-selected-year-id year-id)))
+    (update-selected-year-id year-id)))
 
 (defn contains-multiple? [m keys] (every? #(contains? m %) keys))
 
@@ -93,6 +105,7 @@
         :key point-id
         :id point-id
         :on-click (click-year year-id true)
+        :on-mouse-over #(update-hovered-year-id year-id)
         :style {:left (str (get-percent year-number min-year (+ 1 max-year)) "vw")}}
 
        ; TODO: Clean up this logic
