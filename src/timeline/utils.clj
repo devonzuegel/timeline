@@ -1,5 +1,6 @@
 (ns timeline.utils
-  (:require [clojure.java.io :as io]))
+  (:require [clojure.java.io :as io]
+            [clojure.data.json :as json]))
 
 (defmacro inline-resource [resource-path]
   (slurp (clojure.java.io/resource resource-path)))
@@ -10,6 +11,13 @@
   ; string will try to find a string. You can give it a file, a resource, a
   ; URL... maybe one day someone will implement an S3.
   ; (slurp "https://google.com")
+
+(defmacro inline-json-file-as-edn [resource-path]
+  ; - This needs to be a macro because it needs access to the .json file
+  ; - EDN = Clojure data structures
+  (let [json-str (slurp (clojure.java.io/resource resource-path))]
+    (json/read-str json-str :key-fn keyword)))
+
 
 ; You can think of the variable as quoted (i.e. 'variable). Another way to put
 ; it is that you're operating on the word "elephant", whereas during runtime

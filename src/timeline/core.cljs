@@ -7,9 +7,12 @@
    [goog.dom.classlist :as classlist]
    [goog.fx.dom :as fx-dom])
   (:require-macros
-   [timeline.utils :refer [inline-resource babys-first-macro]]))
+   [timeline.utils :refer
+    [inline-resource babys-first-macro inline-json-file-as-edn]]))
 
 (def example-text (inline-resource "hopl-clojure.html"))
+
+(def example-annotations (inline-json-file-as-edn "example-annotations.json"))
 
 (enable-console-print!)
 
@@ -184,6 +187,7 @@
          (babys-first-macro arrow)
          [:div {:class "container"} [:div {:class "arrow bounce"} arrow]])
        [:div {:class "spacer"}]
+       [:pre (with-out-str (pp/pprint example-annotations))]
        [:pre (with-out-str (pp/pprint state))]
        [:div {:class "html-text" :dangerouslySetInnerHTML {:__html example-text}}]]
       [:div {:class "spacer"}]])))

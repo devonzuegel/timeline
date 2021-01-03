@@ -50,6 +50,7 @@ I'm a Clojure newbie, and I don't like getting stuck on the same things twice. F
 - `macroexpand`
 - Prepending an expression with `#_` comments it out to the end of the expression (rather than the full line, as with `;`)
 - Prepending a form with `#js` (a reader macro) turns it into a Javascript object. Note that this happens at compile time, and it is not recursive. If you want it to run at runtime and/or for it to be recusrive, use the `clj->js` (a function).
+- `lein deps :tree` shows the complete dependency tree so you can debug conflicts. https://stackoverflow.com/questions/33093833/display-complete-dependency-tree-with-leiningen
 
 ## Other things learned while working on this project
 - CSS doesn't allow IDs to start with a number, but HTML does. It momentarily caused me confusion because HTML was more permissive, but CSS just didn't recognize the IDs I'd put in the HTML.
