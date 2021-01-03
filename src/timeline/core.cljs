@@ -5,7 +5,8 @@
    [goog.dom :as dom]
    [timeline.utils :as utils]
    [goog.dom.classlist :as classlist]
-   [goog.fx.dom :as fx-dom])
+   [goog.fx.dom :as fx-dom]
+   [recogito :as recogito])
   (:require-macros
    [timeline.utils :refer
     [inline-resource babys-first-macro inline-json-file-as-edn]]))
@@ -188,6 +189,7 @@
                      nil)]
         ;;  (babys-first-macro relative-to-viewport)
         ;;  (babys-first-macro arrow)
+         (babys-first-macro js/Recogito)
          [:div {:class "container"} [:div {:class "arrow bounce"} arrow]])
        [:div {:class "spacer"}]
        [:pre (with-out-str (pp/pprint example-annotations))]

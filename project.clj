@@ -33,6 +33,8 @@
 
                 :compiler {:main timeline.core
                            :asset-path "js/compiled/out"
+                           :foreign-libs [{:file "resources/recogito.min.js"
+                                           :provides ["recogito"]}]
                            :output-to "resources/public/js/compiled/timeline.js"
                            :output-dir "resources/public/js/compiled/out"
                            :source-map-timestamp true
