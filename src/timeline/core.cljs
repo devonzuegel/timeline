@@ -150,7 +150,8 @@
               :year-number (get-year-from-inline-year-tag year-tag)})))
 
 (defn initialize-years [] ; Build up `years` variable and put it in the atom
-  (let [inline-year-tags (array-seq (.getElementsByClassName js/document "timeline-item"))]
+  (let [inline-year-tags (array-seq (.getElementsByClassName js/document "timeline-item"))
+        annotator (js/Recogito.init #js {:content "foobarbaz"})]
     ; Add `years` to the app state
     (swap! app-state -update-years (sort-years inline-year-tags))
     ; Initialize each inline date tag
@@ -160,7 +161,14 @@
        original-year-tag "click"
        (click-year (get-id-from-inline-year-tag original-year-tag) false) false)
       ; Add border animation
-      (animated-inline-year original-year-tag))))
+      (animated-inline-year original-year-tag))
+
+    ;; (. annotator on "createAnnotation" #(console.log "createAnnotation!"))
+    ;; (console.log (first (first annotations)))
+    ;; (print (first annotations))
+    ;; ;; (. annotator addAnnotation #js (first (first annotations)))
+    (. annotator setAnnotations #js [annotations])
+    (console.log annotator)))
 
 (defn hovered-year-relative-to-viewport [state]
   (let [year-id (:hovered-year-id state)]
@@ -189,12 +197,14 @@
                      nil)]
         ;;  (babys-first-macro relative-to-viewport)
         ;;  (babys-first-macro arrow)
-         (babys-first-macro js/Recogito)
+        ;;  (babys-first-macro (new js/Recogito {:content (. js/document (getElementById "my-content"))}))
          [:div {:class "container"} [:div {:class "arrow bounce"} arrow]])
        [:div {:class "spacer"}]
        [:pre (with-out-str (pp/pprint example-annotations))]
        [:pre (with-out-str (pp/pprint state))]
-       [:div {:class "html-text" :dangerouslySetInnerHTML {:__html example-text}}]]
+       [:div {:class "html-text"
+              :id "foobarbaz"
+              :dangerouslySetInnerHTML {:__html example-text}}]]
       [:div {:class "spacer"}]])))
 
 (rum/mount (hello-world) (. js/document (getElementById "app")))
