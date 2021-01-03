@@ -65,7 +65,7 @@
       (< element-offset (+ (get-scroll-top) (get-viewport-height))) :in-viewport
       :else :after-viewport)))
 
-(defn click-year [year-id scroll-on-click?]
+(defn click-year [year-id {:keys [scroll-on-click?]}]
   (fn [e]
     ; Remove .selected class from all elements to clean up state before
     ; making a new selection.
@@ -107,7 +107,7 @@
        {:class ["point" (when (= year-id selected-year-id) "selected")] ; TODO: Consider using flexbox instead
         :key point-id
         :id point-id
-        :on-click (click-year year-id true)
+        :on-click (click-year year-id {:scroll-on-click? true})
         :on-mouse-over #(update-hovered-year-id year-id)
         :style {:left (str (get-percent year-number min-year (+ 1 max-year)) "vw")}}
 
@@ -154,7 +154,8 @@
       ; Add on-click callback
       (.addEventListener
        original-year-tag "click"
-       (click-year (get-id-from-inline-year-tag original-year-tag) false) false)
+       (click-year (get-id-from-inline-year-tag original-year-tag) {:scroll-on-click? false})
+       false)
       ; Add border animation
       (animated-inline-year original-year-tag))))
 
@@ -187,7 +188,7 @@
          (babys-first-macro arrow)
          [:div {:class "container"} [:div {:class "arrow bounce"} arrow]])
        [:div {:class "spacer"}]
-       [:pre (with-out-str (pp/pprint example-annotations))]
+      ;;  [:pre (with-out-str (pp/pprint example-annotations))]
        [:pre (with-out-str (pp/pprint state))]
        [:div {:class "html-text" :dangerouslySetInnerHTML {:__html example-text}}]]
       [:div {:class "spacer"}]])))
