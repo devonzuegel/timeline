@@ -10,9 +10,12 @@
    [timeline.utils :refer
     [inline-resource babys-first-macro inline-json-file-as-edn]]))
 
-(def example-text (inline-resource "hopl-clojure.html"))
+(def example-annotations
+  (first (inline-json-file-as-edn "example-annotations.json")))
 
-(def example-annotations (inline-json-file-as-edn "example-annotations.json"))
+(def example-text (:cleanHtml example-annotations))
+
+(def annotations (:annotations example-annotations))
 
 (enable-console-print!)
 
@@ -160,7 +163,7 @@
 
 (defn hovered-year-relative-to-viewport [state]
   (let [year-id (:hovered-year-id state)]
-    (babys-first-macro year-id)
+    ;; (babys-first-macro year-id)
     (if (nil? year-id)
       nil ; Nothing is hovered
       (before-or-after-viewport year-id))))
@@ -183,8 +186,8 @@
                      :before-viewport "↑"
                      :after-viewport "↓"
                      nil)]
-         (babys-first-macro relative-to-viewport)
-         (babys-first-macro arrow)
+        ;;  (babys-first-macro relative-to-viewport)
+        ;;  (babys-first-macro arrow)
          [:div {:class "container"} [:div {:class "arrow bounce"} arrow]])
        [:div {:class "spacer"}]
        [:pre (with-out-str (pp/pprint example-annotations))]
