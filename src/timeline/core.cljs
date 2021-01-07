@@ -109,6 +109,7 @@
         :id point-id
         :on-click (click-year year-id {:scroll-on-click? true})
         :on-mouse-over #(update-hovered-year-id year-id)
+        :on-mouse-out #(update-hovered-year-id nil)
         :style {:left (str (get-percent year-number min-year (+ 1 max-year)) "vw")}}
 
        ; TODO: Clean up this logic
