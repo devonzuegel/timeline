@@ -147,28 +147,31 @@
     new-animated-year-tag))
 
 (defn sort-years [inline-year-tags]
-  (sort-by :year-number
-           (for [year-tag inline-year-tags]
-             {:id (get-id-from-inline-year-tag year-tag)
-              :year-number (get-year-from-inline-year-tag year-tag)})))
+  (sort-by :year-number inline-year-tags))
 
 (defn initialize-years [] ; Build up `years` variable and put it in the atom
   (let [inline-year-tags (array-seq (.getElementsByClassName js/document "timeline-item"))
         annotator (js/Recogito.init #js {:content "foobarbaz"})]
 
-    (doseq [annotation annotations]
-      (let [bodies (:body annotation)
-            inline-year-tags-subset (keep #(if (= "time-annotation" (:purpose %))
-                                             (.getFullYear (new js/Date (:value %))))
-                                          bodies)]
-        ;; (babys-first-macro bodies)
-        (babys-first-macro inline-year-tags-subset)
-        (console.log (clj->js inline-year-tags-subset))
-        (. annotator addAnnotation (clj->js annotation))))
+    (def years-from-annotations
+      (flatten (map
+                (fn  [annotation]
+                  (let [bodies (:body annotation)
+                        inline-year-tags-subset
+                        (keep #(if (= "time-annotation" (:purpose %))
+                                 (.getFullYear (new js/Date (:value %))))
+                              bodies)]
+                    (. annotator addAnnotation (clj->js annotation))
+                    inline-year-tags-subset
+                    [{:id "23"
+                      :year-number 1}]))
+                annotations)))
+    (babys-first-macro years-from-annotations)
 
 
     ; Add `years` to the app state
-    (swap! app-state -update-years (sort-years inline-year-tags))
+    (babys-first-macro inline-year-tags)
+    (swap! app-state -update-years (sort-years years-from-annotations))
     ; Initialize each inline date tag
     (doseq [original-year-tag inline-year-tags]
       ; Add on-click callback
