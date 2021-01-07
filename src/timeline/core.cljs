@@ -6,7 +6,8 @@
    [timeline.utils :as utils]
    [goog.dom.classlist :as classlist]
    [goog.fx.dom :as fx-dom]
-   [recogito :as recogito])
+   [recogito :as recogito]
+   #_[htmlSanitizer :as htmlSanitizer])
   (:require-macros
    [timeline.utils :refer
     [inline-resource babys-first-macro inline-json-file-as-edn]]))
@@ -171,8 +172,21 @@
     ;; (print (first annotations))
     ;; ;; (. annotator addAnnotation #js (first (first annotations)))
     ;; (. annotator loadAnnotations "example-annotations.json")
-    (. annotator loadAnnotations "https://jsonbox.io/box_bd8115672b6df30ba312/3fed311908235266ff7c")
-    (console.log annotator)))
+    ;; (. annotator loadAnnotations "https://jsonbox.io/box_bd8115672b6df30ba312/3fed311908235266ff7c")
+    (. annotator addAnnotation {:type "Annotation"
+                                :target {:selector [{:type "TextQuoteSelector"
+                                                     :exact "October of 1990"}
+                                                    {:type "TextPositionSelector"
+                                                     :start 1881
+                                                     :end 1896}]}
+                                :id "#5f41fdde-0a39-44ac-a816-08ae60402709"
+                                :body [{:type "TextualBody"
+                                        :purpose "time-annotation"
+                                        :value "1990-10-01T04:00:00.000Z"
+                                        :timeSelectionType "month"}]})
+    ;; (babys-first-macro HtmlSanitizer)
+    ;; (babys-first-macro htmlSanitizer)
+    (babys-first-macro annotator)))
 
 (defn hovered-year-relative-to-viewport [state]
   (let [year-id (:hovered-year-id state)]

@@ -34,7 +34,9 @@
                 :compiler {:main timeline.core
                            :asset-path "js/compiled/out"
                            :foreign-libs [{:file "resources/recogito.min.js"
-                                           :provides ["recogito"]}]
+                                           :provides ["recogito"]}
+                                          {:file "resources/html-sanitizer.js"
+                                           :provides ["htmlSanitizer"]}]
                            :output-to "resources/public/js/compiled/timeline.js"
                            :output-dir "resources/public/js/compiled/out"
                            :source-map-timestamp true
