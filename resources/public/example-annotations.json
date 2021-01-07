@@ -1,0 +1,202 @@
+[
+  {
+    "_id": "5ff083fedbdb5300172bc7b7",
+    "annotations": [
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "value": "Ok!",
+            "purpose": "commenting"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "March 1989"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 1367,
+              "end": 1377
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#f090856f-58a7-49b5-b369-0519b76098a5"
+      },
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "value": "Another Commentsaaaaa",
+            "purpose": "commenting"
+          },
+          {
+            "type": "TextualBody",
+            "value": "A full chain",
+            "purpose": "commenting"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "September 1990"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 1755,
+              "end": 1769
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#d803ca92-f642-4e50-8c1d-6a5d902c8421"
+      },
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "purpose": "time-annotation",
+            "value": "1990-10-01T04:00:00.000Z",
+            "timeSelectionType": "month"
+          },
+          {
+            "type": "TextualBody",
+            "value": "Ok",
+            "purpose": "commenting"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "October of 1990"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 1881,
+              "end": 1896
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#5f41fdde-0a39-44ac-a816-08ae60402709"
+      },
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "value": "New web standards",
+            "purpose": "commenting"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "2003"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 3295,
+              "end": 3299
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#0b4f796c-f9ec-49f2-809a-589a8943c2a6"
+      },
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "value": "25th Birthday",
+            "purpose": "commenting"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "2014"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 3398,
+              "end": 3402
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#e29bb7ce-a50f-4418-b6b3-5fe3bfc6b5ee"
+      },
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "value": "WWW Foundation created",
+            "purpose": "commenting"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "2009"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 5486,
+              "end": 5490
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#8c60083c-6e64-43bf-b621-032bf152a887"
+      },
+      {
+        "type": "Annotation",
+        "body": [
+          {
+            "type": "TextualBody",
+            "purpose": "time-annotation",
+            "value": "2012-07-27T04:00:00.000Z",
+            "timeSelectionType": "date"
+          },
+          {
+            "type": "TextualBody",
+            "value": "Olympic Ceremony Tweet",
+            "purpose": "commenting"
+          }
+        ],
+        "target": {
+          "selector": [
+            {
+              "type": "TextQuoteSelector",
+              "exact": "Olympics Opening Ceremony in 2012"
+            },
+            {
+              "type": "TextPositionSelector",
+              "start": 5807,
+              "end": 5840
+            }
+          ]
+        },
+        "@context": "http://www.w3.org/ns/anno.jsonld",
+        "id": "#b0c9090d-4780-4696-af9a-09f01e5520c5"
+      }
+    ],
+    "cleanHtml": "<div class=\"adj-content-mobile post-container\"><p>Sir Tim Berners-Lee is a British computer scientist. He was born in London, and his parents were early computer scientists, working on one of the earliest computers.</p><p>Growing up, Sir Tim was interested in trains and had a model railway in his bedroom. He<a href=\"http://www.w3.org/People/Berners-Lee/Kids.html\"> recalls</a>:</p><p><i>“I made some electronic gadgets to control the trains. Then I ended up getting more interested in electronics than trains. Later on, when I was in college I made a compute</i>r <i>out of an old television set.”</i></p><p>After graduating from Oxford University, Berners-Lee became a software engineer at<a href=\"http://home.web.cern.ch/\"> CERN</a>, the large particle physics laboratory near Geneva, Switzerland. Scientists come from all over the world to use its accelerators, but Sir Tim noticed that they were having difficulty sharing information.</p><p><i>“In those days, there was different information on different computers, but you had to log on to different computers to get at it. Also, sometimes you had to learn a different program on each computer. Often it was just easier to go and ask people when they were having coffee…”, </i><a href=\"http://www.w3.org/People/Berners-Lee/Kids.html\">Tim says</a>.</p><p>Tim thought he saw a way to solve this problem – one that he could see could also have much broader applications. Already, millions of computers were being connected together through the fast-developing <a href=\"http://www.internetsociety.org/internet/what-internet\">internet</a> and Berners-Lee realised they could share information by exploiting an emerging technology called hypertext.</p><p>In March 1989, Tim laid out his vision for what would become the web in a document called “<a href=\"http://info.cern.ch/Proposal.html\">Information Management: A Proposal</a>”. Believe it or not, Tim’s initial proposal was not immediately accepted. In fact, his boss at the time,<a href=\"http://bullarchive.web.cern.ch/bullarchive/9930/art2/Text_E.html\"> Mike Sendall</a>, noted the words “Vague but exciting” on the cover. The web was never an official CERN project, but Mike managed to give Tim time to work on it in September 1990. He began work using a<a href=\"http://en.wikipedia.org/wiki/NeXT_Computer\"> NeXT computer,</a> one of Steve Jobs’ early products.</p><figure id=\"attachment_11608\" class=\"wp-caption aligncenter\"><a href=\"https://3ehspg3e85cn1oz25ebdof7c-wpengine.netdna-ssl.com/wp-content/uploads/2015/05/TBL-proposal.jpg\"><img class=\"size-medium wp-image-11608\" src=\"https://3ehspg3e85cn1oz25ebdof7c-wpengine.netdna-ssl.com/wp-content/uploads/2015/05/TBL-proposal-280x377.jpg\" alt=\"Tim's original proposal. Image: CERN\" width=\"280\" srcset=\"https://3ehspg3e85cn1oz25ebdof7c-wpengine.netdna-ssl.com/docs/2015/05/TBL-proposal-280x377.jpg 280w, https://3ehspg3e85cn1oz25ebdof7c-wpengine.netdna-ssl.com/docs/2015/05/TBL-proposal-118x159.jpg 118w, https://3ehspg3e85cn1oz25ebdof7c-wpengine.netdna-ssl.com/docs/2015/05/TBL-proposal.jpg 318w\" sizes=\"(max-width: 280px) 100vw, 280px\"></a><figcaption id=\"caption-attachment-11608\" class=\"wp-caption-text\">Tim’s original proposal. Image: CERN</figcaption></figure><p>By October of 1990, Tim had written the three fundamental technologies that remain the foundation of today’s web (and which you may have seen appear on parts of your web browser):</p><ul><li>HTML: HyperText Markup Language. The markup (formatting) language for the web.</li><li>URI: Uniform Resource Identifier. A kind of “address” that is unique and used to identify to each resource on the web. It is also commonly called a URL.</li><li>HTTP: Hypertext Transfer Protocol. Allows for the retrieval of linked resources from across the web.</li></ul><p>Tim also wrote the first web page editor/browser (“WorldWideWeb.app”) and the first web server (“httpd“). By the end of 1990, the first web page was served on the open internet, and in 1991, people outside of CERN were invited to join this new web community.</p><p>As the web began to grow, Tim realised that its true potential would only be unleashed if anyone, anywhere could use it without paying a fee or having to ask for permission.</p><p>He<a href=\"http://www.w3.org/People/Berners-Lee/FAQ.html\"> explains</a>: <i>“Had the technology been proprietary, and in my total control, it would probably not have taken off. You can’t propose that something be a universal space and at the same time keep control of it.”</i></p><p>So, Tim and others advocated to ensure that CERN would agree to make the underlying code available on a royalty-free basis, forever. This decision was announced in<a href=\"http://tenyears-www.web.cern.ch/tenyears-www/Welcome.html\"> April 1993</a>, and sparked a global wave of creativity, collaboration and innovation never seen before. In 2003, the companies developing new web standards committed to a Royalty Free Policy for their work. In 2014, the year we celebrated the<a href=\"http://webat25.org/\"> web’s 25th birthday</a>,<a href=\"http://www.itu.int/en/ITU-D/Statistics/Documents/facts/ICTFactsFigures2014-e.pdf\"> almost two in five people around the world</a> were using it.</p><p>Tim moved from CERN to the Massachusetts Institute of Technology in 1994 to found the<a href=\"http://www.w3.org/\"> World Wide Web Consortium</a> (W3C), an international community devoted to developing<a href=\"http://www.w3.org/standards/\"> open web standards</a>. He remains the Director of W3C to this day.</p><p>The early web community produced some revolutionary ideas that are now spreading far beyond the technology sector:</p><ul><li>Decentralisation: No permission is needed from a central authority to post anything on the web, there is no central controlling node, and so no single point of failure … and no “kill switch”! This also implies freedom from indiscriminate censorship and surveillance.</li></ul><ul><li>Non-discrimination: If I pay to connect to the internet with a certain quality of service, and you pay to connect with that or a greater quality of service, then we can both communicate at the same level. This principle of equity is also known as Net Neutrality.</li><li>Bottom-up design: Instead of code being written and controlled by a small group of experts, it was developed in full view of everyone, encouraging maximum participation and experimentation.</li></ul><ul><li>Universality: For anyone to be able to publish anything on the web, all the computers involved have to speak the same languages to each other, no matter what different hardware people are using; where they live; or what cultural and political beliefs they have. In this way, the web breaks down silos while still allowing diversity to flourish.</li></ul><ul><li>Consensus: For universal standards to work, everyone had to agree to use them. Tim and others achieved this consensus by giving everyone a say in creating the standards, through a transparent, participatory process at W3C.</li></ul><p>New permutations of these ideas are giving rise to exciting new approaches in fields as diverse as information (Open Data), politics (Open Government), scientific research (Open Access), education, and culture (Free Culture). But to date we have only scratched the surface of how these principles could change society and politics for the better.</p><p>In 2009, Sir Tim co-founded the World Wide Web Foundation with Rosemary Leith. The Web Foundation is fighting for the web we want: a web that is safe, empowering and for everyone.</p><p>Please do explore our site and<a href=\"http://webfoundation.org/our-work/\"> our work</a>. We hope you’ll be inspired by our vision and decide to take action. Remember, as Tim tweeted during the Olympics Opening Ceremony in 2012,<a href=\"http://altwf.wpengine.com/take-action/\"> “This is for Everyone”</a>.</p><blockquote class=\"twitter-tweet\"><p>This is for everyone <a href=\"https://twitter.com/hashtag/london2012?src=hash\">#london2012</a><a href=\"https://twitter.com/hashtag/oneweb?src=hash\">#oneweb</a><a href=\"https://twitter.com/hashtag/openingceremony?src=hash\">#openingceremony</a><a href=\"https://twitter.com/webfoundation\">@webfoundation</a><a href=\"https://twitter.com/w3c\">@w3c</a></p><p>— Tim Berners-Lee (@timberners_lee) <a href=\"https://twitter.com/timberners_lee/status/228960085672599552\">July 27, 2012</a></p></blockquote><p><strong>Important Note: This text is intended as a brief introduction to the history of the web. For a more detailed account, you might want to consider reading: </strong></p></div>",
+    "url": "https://webfoundation.org/about/vision/history-of-the-web/",
+    "_createdOn": "2021-01-02T14:32:30.986Z"
+  }
+]

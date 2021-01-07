@@ -11,8 +11,9 @@
    [timeline.utils :refer
     [inline-resource babys-first-macro inline-json-file-as-edn]]))
 
-(def example-annotations
-  (first (inline-json-file-as-edn "example-annotations.json")))
+(def all-example-annotations (inline-json-file-as-edn "example-annotations.json"))
+
+(def example-annotations (first all-example-annotations))
 
 (def example-text (:cleanHtml example-annotations))
 
@@ -169,7 +170,8 @@
     ;; (console.log (first (first annotations)))
     ;; (print (first annotations))
     ;; ;; (. annotator addAnnotation #js (first (first annotations)))
-    (. annotator setAnnotations #js [annotations])
+    ;; (. annotator loadAnnotations "example-annotations.json")
+    (. annotator loadAnnotations "https://jsonbox.io/box_bd8115672b6df30ba312/3fed311908235266ff7c")
     (console.log annotator)))
 
 (defn hovered-year-relative-to-viewport [state]
