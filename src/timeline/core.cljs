@@ -155,6 +155,18 @@
 (defn initialize-years [] ; Build up `years` variable and put it in the atom
   (let [inline-year-tags (array-seq (.getElementsByClassName js/document "timeline-item"))
         annotator (js/Recogito.init #js {:content "foobarbaz"})]
+
+    (doseq [annotation annotations]
+      (let [bodies (:body annotation)
+            inline-year-tags-subset (keep #(if (= "time-annotation" (:purpose %))
+                                             (.getFullYear (new js/Date (:value %))))
+                                          bodies)]
+        ;; (babys-first-macro bodies)
+        (babys-first-macro inline-year-tags-subset)
+        (console.log (clj->js inline-year-tags-subset))
+        (. annotator addAnnotation (clj->js annotation))))
+
+
     ; Add `years` to the app state
     (swap! app-state -update-years (sort-years inline-year-tags))
     ; Initialize each inline date tag
@@ -165,28 +177,7 @@
        (click-year (get-id-from-inline-year-tag original-year-tag) {:scroll-on-click? false})
        false)
       ; Add border animation
-      (animated-inline-year original-year-tag))
-
-    ;; (. annotator on "createAnnotation" #(console.log "createAnnotation!"))
-    ;; (console.log (first (first annotations)))
-    ;; (print (first annotations))
-    ;; (. annotator addAnnotation (first (first annotations)))
-    ;; (. annotator loadAnnotations "example-annotations.json")
-    ;; (. annotator loadAnnotations "https://jsonbox.io/box_bd8115672b6df30ba312/3fed311908235266ff7c")
-    (. annotator addAnnotation (clj->js {:type "Annotation"
-                                         :target {:selector [{:type "TextQuoteSelector"
-                                                              :exact "October of 1990"}
-                                                             {:type "TextPositionSelector"
-                                                              :start 1881
-                                                              :end 1896}]}
-                                         :id "#5f41fdde-0a39-44ac-a816-08ae60402709"
-                                         :body [{:type "TextualBody"
-                                                 :purpose "time-annotation"
-                                                 :value "1990-10-01T04:00:00.000Z"
-                                                 :timeSelectionType "month"}]}))
-    ;; (babys-first-macro HtmlSanitizer)
-    ;; (babys-first-macro htmlSanitizer)
-    (babys-first-macro annotator)))
+      (animated-inline-year original-year-tag))))
 
 (defn hovered-year-relative-to-viewport [state]
   (let [year-id (:hovered-year-id state)]
