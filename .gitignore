@@ -16,3 +16,6 @@ pom.xml
 .lsp
 .clj-kondo/
 .DS_Store
+.classpath
+.project
+.settings/

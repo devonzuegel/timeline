@@ -275,11 +275,14 @@ pre {
 }
 .arrow {
   position: absolute;
-  bottom: 0;
+  top: 100px;
   left: 50%;
   margin-left: -20px;
   width: 40px;
   height: 60px; /*change with size of arrow to make sit on bottom */
+  font-weight: 600;
+  font-size: 2em;
+  color: #aaa;
 }
 
 .bounce {
