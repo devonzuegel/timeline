@@ -54,9 +54,7 @@
   (assoc current-app-state :hovered-year-id year-id))
 
 (defn update-hovered-year-id [year-id]
-  ;; (babys-first-macro year-id)
-  ; TODO: Fix this to handle Recogito annotations so I can put it back
-  #_(swap! app-state -update-hovered-year-id year-id))
+  (swap! app-state -update-hovered-year-id year-id))
 
 (defn get-scroll-top "Current scroll position" [] (.-y (dom/getDocumentScroll)))
 
@@ -65,17 +63,17 @@
         height (second width-and-height)]
     height))
 
-(defn before-or-after-viewport [element-id]
-  (let [element-offset (.-offsetTop (.getElementById js/document element-id))]
-    (cond
-      (< element-offset (get-scroll-top)) :before-viewport
-      (< element-offset (+ (get-scroll-top) (get-viewport-height))) :in-viewport
-      :else :after-viewport)))
-
 (defn get-annotation-elem-from-data-id [year-id]
   (.querySelector
    js/document
    (str "[data-id='" year-id "']")))
+
+(defn before-or-after-viewport [data-id]
+  (let [element-offset (.-offsetTop (get-annotation-elem-from-data-id data-id))]
+    (cond
+      (< element-offset (get-scroll-top)) :before-viewport
+      (< element-offset (+ (get-scroll-top) (get-viewport-height))) :in-viewport
+      :else :after-viewport)))
 
 (defn click-year [year-id {:keys [scroll-on-click?]}]
   (fn [e]
@@ -85,15 +83,13 @@
     (let [elems-with-selected-class (vec (array-seq (.getElementsByClassName js/document "selected")))]
       (doseq [elem elems-with-selected-class]
         (classlist/remove elem "selected")))
-    ; Add .selected class to new selection
 
+    ; Add .selected class to new selection
     (let [new-selection (get-annotation-elem-from-data-id year-id)]
-    ;; if-let [new-selection (.getElementById js/document year-id)]
       (do
         (classlist/add new-selection "selected")
         (when scroll-on-click?
           (let [top-offset (- (.-offsetTop new-selection) 64)]
-            ; TODO: Only scroll when the inline element is off screen
             (.play (fx-dom/Scroll.
                     (dom/getDocumentScrollElement)
                     #js [0 (get-scroll-top)]
@@ -109,7 +105,8 @@
    (string? (:data-id y))
    (number? (:year-number y))))
 
-(defn render-year-fn [years selected-year-id] ; Curry the function based on entire range of years
+; Curry the function based on entire range of years
+(defn render-timeline-dots-fn [years selected-data-id hovered-data-id]
   {:pre [(every? is-year-map? years)]}
   (fn [i year]
     (let [min-year (:year-number (first years))
@@ -118,7 +115,9 @@
           year-number (:year-number year)
           point-id (str year-id "--point")]
       [:span
-       {:class ["point" (when (= year-id selected-year-id) "selected")] ; TODO: Consider using flexbox instead
+       {:class ["point"
+                (when (= year-id selected-data-id) "selected")
+                (when (= year-id hovered-data-id) "hovered")]
         :key point-id
         :data-id point-id
         :on-click (click-year year-id {:scroll-on-click? true})
@@ -126,9 +125,7 @@
         :on-mouse-out #(update-hovered-year-id nil)
         :style {:left (str (get-percent year-number min-year (+ 1 max-year)) "vw")}}
 
-       ; TODO: Clean up this logic
-       ; TODO: Handle the onclick
-       (when (= year-id selected-year-id)
+       (when (= year-id selected-data-id)
          [:div {:class "pulsating-dot"}
           [:div {:class "dot"}]
           [:div {:class "pulse"}]])])))
@@ -157,40 +154,51 @@
 (defn sort-years [inline-year-tags]
   (sort-by :year-number inline-year-tags))
 
-(defn initialize-years [] ; Build up `years` variable and put it in the atom
-  (let [annotator (js/Recogito.init #js {:content "foobarbaz"})]
+(defn keep-time-annotations [annotation bodies]
+  (keep #(if (= "time-annotation" (:purpose %))
+           {:data-id (:id annotation)
+            :year-number (.getFullYear (new js/Date (:value %)))})
+        bodies))
 
-    ; TODO: Clean up this mess. Consider using the "thread last" macro (->>)
-    (def years-from-annotations
-      (flatten (map
-                (fn  [annotation]
-                  (let [bodies (:body annotation)
-                        inline-year-tags-subset
-                        (keep #(if (= "time-annotation" (:purpose %))
-                                 {:data-id (:id annotation)
-                                  :year-number (.getFullYear (new js/Date (:value %)))})
-                              bodies)]
-                    (. annotator addAnnotation (clj->js annotation))
-                    inline-year-tags-subset))
-                annotations)))
+(defn get-all-time-annotations [annotator annotations]
+  (->> annotations
+       (map
+        (fn [annotation]
+          (let [bodies (:body annotation)
+                inline-year-tags-subset (keep-time-annotations annotation bodies)]
+            (. annotator addAnnotation (clj->js annotation))
+            inline-year-tags-subset)))
+       (flatten)))
+
+(defn initialize-years [] ; Build up `years` variable and put it in the atom
+  (let [annotator (js/Recogito.init #js {:content "article-body-with-annotations"})
+        ; Not all annotations have `:purpose "time-annotation"`, so filter out
+        ; those that have a different (or nonexistent) purpose.
+        time-annotations (get-all-time-annotations annotator annotations)]
 
     ; Add `years` to the app state
-    (swap! app-state -update-years (sort-years years-from-annotations))
+    (swap! app-state -update-years (sort-years time-annotations))
+
     ; Initialize each inline date tag
-    (doseq [year years-from-annotations]
+    (doseq [year time-annotations]
       (let [original-year-tag (get-annotation-elem-from-data-id (:data-id year))]
-      ; Add on-click callback
+
         (.addEventListener
          original-year-tag "click"
          (click-year (get-id-from-inline-year-tag original-year-tag) {:scroll-on-click? false})
          false)
+
         (.addEventListener
          original-year-tag "mouseover"
-         #(console.log "mouseover happened")
+         #(update-hovered-year-id (:data-id year))
          false)
-        (animated-inline-year original-year-tag)))
-      ; Add border animation TODO: Add this back in!
-    ))
+
+        (.addEventListener
+         original-year-tag "mouseout"
+         #(update-hovered-year-id nil)
+         false)
+
+        (animated-inline-year original-year-tag)))))
 
 (defn hovered-year-relative-to-viewport [state]
   (let [year-id (:hovered-year-id state)]
@@ -206,7 +214,10 @@
      [:div
       [:div {:class "timeline"}
        (render-timeline-background years)
-       (map-indexed (render-year-fn years (:selected-year-id state)) years)]
+       (map-indexed (render-timeline-dots-fn years
+                                             (:selected-year-id state)
+                                             (:hovered-year-id state))
+                    years)]
 
       ; TODO: Show this only when hovering over a timeline dot
       ; TODO: Handle the up case (right now just handling the down)
@@ -222,7 +233,7 @@
         (str "Note that not all annotations in the example are dates (even if they may look like they are!)\n\n"
              (with-out-str (pp/pprint state)))]
        [:div {:class "html-text"
-              :id "foobarbaz"
+              :id "article-body-with-annotations"
               :dangerouslySetInnerHTML {:__html example-text}}]]
       [:div {:class "spacer"}]
       [:div {:class "spacer"}]
