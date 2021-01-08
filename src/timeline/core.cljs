@@ -11,7 +11,7 @@
    [timeline.utils :refer
     [inline-resource babys-first-macro inline-json-file-as-edn]]))
 
-(def all-example-annotations (inline-json-file-as-edn "example-annotations.json"))
+(def all-example-annotations (inline-json-file-as-edn "example-annotations-2.json"))
 
 (def example-annotations (first all-example-annotations))
 
