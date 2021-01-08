@@ -34,7 +34,7 @@
   (int (.-innerText date-tag)))
 
 (defn get-id-from-inline-year-tag [date-tag]
-  (str (.-id date-tag)))
+  (str (.getAttribute date-tag "data-id")))
 
 (defn get-percent [y min-year max-year]
   (* 100  (divide (- y min-year) (- max-year min-year))))
@@ -56,8 +56,7 @@
 (defn update-hovered-year-id [year-id]
   ;; (babys-first-macro year-id)
   ; TODO: Fix this to handle Recogito annotations so I can put it back
-  ;; #_(swap! app-state -update-hovered-year-id year-id)
-  )
+  #_(swap! app-state -update-hovered-year-id year-id))
 
 (defn get-scroll-top "Current scroll position" [] (.-y (dom/getDocumentScroll)))
 
@@ -73,7 +72,7 @@
       (< element-offset (+ (get-scroll-top) (get-viewport-height))) :in-viewport
       :else :after-viewport)))
 
-(defn get-annotation-from-data-id [year-id]
+(defn get-annotation-elem-from-data-id [year-id]
   (.querySelector
    js/document
    (str "[data-id='" year-id "']")))
@@ -88,9 +87,8 @@
         (classlist/remove elem "selected")))
     ; Add .selected class to new selection
 
-    (let [new-selection (get-annotation-from-data-id year-id)]
+    (let [new-selection (get-annotation-elem-from-data-id year-id)]
     ;; if-let [new-selection (.getElementById js/document year-id)]
-      (babys-first-macro new-selection)
       (do
         (classlist/add new-selection "selected")
         (when scroll-on-click?
@@ -160,10 +158,9 @@
   (sort-by :year-number inline-year-tags))
 
 (defn initialize-years [] ; Build up `years` variable and put it in the atom
-  (let [inline-year-tags (array-seq (.getElementsByClassName js/document "timeline-item"))
-        annotator (js/Recogito.init #js {:content "foobarbaz"})]
+  (let [annotator (js/Recogito.init #js {:content "foobarbaz"})]
 
-    ; TODO: Clean up this mess
+    ; TODO: Clean up this mess. Consider using the "thread last" macro (->>)
     (def years-from-annotations
       (flatten (map
                 (fn  [annotation]
@@ -176,24 +173,26 @@
                     (. annotator addAnnotation (clj->js annotation))
                     inline-year-tags-subset))
                 annotations)))
-    ;; (babys-first-macro years-from-annotations)
 
     ; Add `years` to the app state
     (swap! app-state -update-years (sort-years years-from-annotations))
     ; Initialize each inline date tag
-    (doseq [original-year-tag inline-year-tags]
+    (doseq [year years-from-annotations]
+      (let [original-year-tag (get-annotation-elem-from-data-id (:data-id year))]
       ; Add on-click callback
-      (.addEventListener
-       original-year-tag "click"
-       #(console.log "hello")
-      ;;  (click-year (get-id-from-inline-year-tag original-year-tag) {:scroll-on-click? false})
-       false)
-      ; Add border animation
-      (animated-inline-year original-year-tag))))
+        (.addEventListener
+         original-year-tag "click"
+         (click-year (get-id-from-inline-year-tag original-year-tag) {:scroll-on-click? false})
+         false)
+        (.addEventListener
+         original-year-tag "mouseover"
+         #(console.log "mouseover happened")
+         false)))
+      ; Add border animation TODO: Add this back in!
+    #_(animated-inline-year original-year-tag)))
 
 (defn hovered-year-relative-to-viewport [state]
   (let [year-id (:hovered-year-id state)]
-    ;; (babys-first-macro year-id)
     (if (nil? year-id)
       nil ; Nothing is hovered
       (before-or-after-viewport year-id))))
@@ -216,16 +215,17 @@
                      :before-viewport "↑"
                      :after-viewport "↓"
                      nil)]
-        ;;  (babys-first-macro relative-to-viewport)
-        ;;  (babys-first-macro arrow)
-        ;;  (babys-first-macro (new js/Recogito {:content (. js/document (getElementById "my-content"))}))
          [:div {:class "container"} [:div {:class "arrow bounce"} arrow]])
        [:div {:class "spacer"}]
       ;;  [:pre (with-out-str (pp/pprint example-annotations))]
-       [:pre (with-out-str (pp/pprint state))]
+       [:pre {:id "state"}
+        (str "Note that not all annotations in the example are dates (even if they may look like they are!)\n\n"
+             (with-out-str (pp/pprint state)))]
        [:div {:class "html-text"
               :id "foobarbaz"
               :dangerouslySetInnerHTML {:__html example-text}}]]
+      [:div {:class "spacer"}]
+      [:div {:class "spacer"}]
       [:div {:class "spacer"}]])))
 
 (rum/mount (hello-world) (. js/document (getElementById "app")))

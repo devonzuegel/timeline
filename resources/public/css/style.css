@@ -18,6 +18,15 @@ pre {
   width: 100%;
 }
 
+pre#state {
+  position: fixed;
+  background: rgba(255, 218, 224, 0.9);
+  z-index: 1;
+  bottom: 8px;
+  left: 8px;
+  padding: 8px;
+}
+
 /******************
  * Timeline
  ******************/
@@ -85,13 +94,14 @@ pre {
 .dot {
   width: 15px;
   height: 15px;
-  background-color: rgb(0, 212, 166);
-  border: 2px solid white;
+  background-color: black;
+  border: 2px solid lightgrey;
   border-radius: 50%;
+  z-index: 1;
 }
 
 .pulse {
-  background-color: rgba(0, 230, 181, 0.5);
+  background-color: grey;
   -webkit-border-radius: 30px;
   height: 25px;
   width: 25px;
