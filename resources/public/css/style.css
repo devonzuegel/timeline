@@ -163,7 +163,7 @@ pre#state {
 .html-text .r6o-annotation.selected {
   color: #444;
   // border-bottom: 2px solid #555;
-  border-bottom: 2px solid black;
+  // border-bottom: 2px solid black;
 }
 
 .html-text .r6o-annotation.selected:hover {

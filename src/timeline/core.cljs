@@ -187,9 +187,10 @@
         (.addEventListener
          original-year-tag "mouseover"
          #(console.log "mouseover happened")
-         false)))
+         false)
+        (animated-inline-year original-year-tag)))
       ; Add border animation TODO: Add this back in!
-    #_(animated-inline-year original-year-tag)))
+    ))
 
 (defn hovered-year-relative-to-viewport [state]
   (let [year-id (:hovered-year-id state)]
@@ -217,7 +218,6 @@
                      nil)]
          [:div {:class "container"} [:div {:class "arrow bounce"} arrow]])
        [:div {:class "spacer"}]
-      ;;  [:pre (with-out-str (pp/pprint example-annotations))]
        [:pre {:id "state"}
         (str "Note that not all annotations in the example are dates (even if they may look like they are!)\n\n"
              (with-out-str (pp/pprint state)))]
