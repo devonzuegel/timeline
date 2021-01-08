@@ -107,8 +107,8 @@
 
 (defn is-year-map? [y]
   (and
-  ;;  (contains-multiple? y [:id :year-number]) ; TODO: Put me back
-  ;;  (string? (:id y)) ; TODO: Put me back
+   (contains-multiple? y [:data-id :year-number])
+   (string? (:data-id y))
    (number? (:year-number y))))
 
 (defn render-year-fn [years selected-year-id] ; Curry the function based on entire range of years
@@ -116,13 +116,13 @@
   (fn [i year]
     (let [min-year (:year-number (first years))
           max-year (:year-number (last years))
-          year-id (:id year)
+          year-id (:data-id year)
           year-number (:year-number year)
           point-id (str year-id "--point")]
       [:span
        {:class ["point" (when (= year-id selected-year-id) "selected")] ; TODO: Consider using flexbox instead
         :key point-id
-        :id point-id
+        :data-id point-id
         :on-click (click-year year-id {:scroll-on-click? true})
         :on-mouse-over #(update-hovered-year-id year-id)
         :on-mouse-out #(update-hovered-year-id nil)
@@ -170,7 +170,7 @@
                   (let [bodies (:body annotation)
                         inline-year-tags-subset
                         (keep #(if (= "time-annotation" (:purpose %))
-                                 {:id (:id annotation)
+                                 {:data-id (:id annotation)
                                   :year-number (.getFullYear (new js/Date (:value %)))})
                               bodies)]
                     (. annotator addAnnotation (clj->js annotation))
