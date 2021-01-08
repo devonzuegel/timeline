@@ -6,8 +6,7 @@
    [timeline.utils :as utils]
    [goog.dom.classlist :as classlist]
    [goog.fx.dom :as fx-dom]
-   [recogito :as recogito]
-   #_[htmlSanitizer :as htmlSanitizer])
+   [recogito :as recogito])
   (:require-macros
    [timeline.utils :refer
     [inline-resource babys-first-macro inline-json-file-as-edn]]))
@@ -22,7 +21,7 @@
 
 (enable-console-print!)
 
-;; define your app data so that doesn't get over-written on reload
+; Define your app data so that doesn't get over-written on reload
 (defonce app-state
   (atom {:selected-year-id nil
          :hovered-year-id nil
@@ -55,7 +54,10 @@
   (assoc current-app-state :hovered-year-id year-id))
 
 (defn update-hovered-year-id [year-id]
-  (swap! app-state -update-hovered-year-id year-id))
+  ;; (babys-first-macro year-id)
+  ; TODO: Fix this to handle Recogito annotations so I can put it back
+  ;; #_(swap! app-state -update-hovered-year-id year-id)
+  )
 
 (defn get-scroll-top "Current scroll position" [] (.-y (dom/getDocumentScroll)))
 
@@ -71,6 +73,11 @@
       (< element-offset (+ (get-scroll-top) (get-viewport-height))) :in-viewport
       :else :after-viewport)))
 
+(defn get-annotation-from-data-id [year-id]
+  (.querySelector
+   js/document
+   (str "[data-id='" year-id "']")))
+
 (defn click-year [year-id {:keys [scroll-on-click?]}]
   (fn [e]
     ; Remove .selected class from all elements to clean up state before
@@ -80,7 +87,10 @@
       (doseq [elem elems-with-selected-class]
         (classlist/remove elem "selected")))
     ; Add .selected class to new selection
-    (if-let [new-selection (.getElementById js/document year-id)]
+
+    (let [new-selection (get-annotation-from-data-id year-id)]
+    ;; if-let [new-selection (.getElementById js/document year-id)]
+      (babys-first-macro new-selection)
       (do
         (classlist/add new-selection "selected")
         (when scroll-on-click?
@@ -97,8 +107,8 @@
 
 (defn is-year-map? [y]
   (and
-   (contains-multiple? y [:id :year-number])
-   (string? (:id y))
+  ;;  (contains-multiple? y [:id :year-number]) ; TODO: Put me back
+  ;;  (string? (:id y)) ; TODO: Put me back
    (number? (:year-number y))))
 
 (defn render-year-fn [years selected-year-id] ; Curry the function based on entire range of years
@@ -153,31 +163,30 @@
   (let [inline-year-tags (array-seq (.getElementsByClassName js/document "timeline-item"))
         annotator (js/Recogito.init #js {:content "foobarbaz"})]
 
+    ; TODO: Clean up this mess
     (def years-from-annotations
       (flatten (map
                 (fn  [annotation]
                   (let [bodies (:body annotation)
                         inline-year-tags-subset
                         (keep #(if (= "time-annotation" (:purpose %))
-                                 (.getFullYear (new js/Date (:value %))))
+                                 {:id (:id annotation)
+                                  :year-number (.getFullYear (new js/Date (:value %)))})
                               bodies)]
                     (. annotator addAnnotation (clj->js annotation))
-                    inline-year-tags-subset
-                    [{:id "23"
-                      :year-number 1}]))
+                    inline-year-tags-subset))
                 annotations)))
-    (babys-first-macro years-from-annotations)
-
+    ;; (babys-first-macro years-from-annotations)
 
     ; Add `years` to the app state
-    (babys-first-macro inline-year-tags)
     (swap! app-state -update-years (sort-years years-from-annotations))
     ; Initialize each inline date tag
     (doseq [original-year-tag inline-year-tags]
       ; Add on-click callback
       (.addEventListener
        original-year-tag "click"
-       (click-year (get-id-from-inline-year-tag original-year-tag) {:scroll-on-click? false})
+       #(console.log "hello")
+      ;;  (click-year (get-id-from-inline-year-tag original-year-tag) {:scroll-on-click? false})
        false)
       ; Add border animation
       (animated-inline-year original-year-tag))))

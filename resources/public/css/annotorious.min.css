@@ -157,8 +157,8 @@
   text-shadow: none;
 }
 .r6o-annotation {
-  background-color: rgba(255, 165, 0, 0.2);
-  border-bottom: 2px solid orange;
+  // background-color: rgba(255, 165, 0, 0.2);
+  // border-bottom: 2px solid orange;
   cursor: pointer;
 }
 .r6o-selection {

@@ -138,34 +138,34 @@ pre {
   padding: 0 36px;
 }
 
-.html-text .timeline-item {
+.html-text .r6o-annotation {
   color: #444;
   border-bottom: 2px dotted #bbb;
   font-weight: 600;
   cursor: pointer;
 }
 
-.html-text .timeline-item:hover {
+.html-text .r6o-annotation:hover {
   color: black;
   border-bottom: 2px dotted rgb(117, 111, 111);
 }
 
-.html-text .timeline-item.selected {
+.html-text .r6o-annotation.selected {
   color: #444;
   // border-bottom: 2px solid #555;
-  // border-bottom: 2px solid black;
+  border-bottom: 2px solid black;
 }
 
-.html-text .timeline-item.selected:hover {
+.html-text .r6o-annotation.selected:hover {
   color: black;
   // border-bottom: 2px solid black;
   // border-bottom: 2px solid black;
 }
 
-.html-text .timeline-item,
-.html-text .timeline-item:hover,
-.html-text .timeline-item.selected,
-.html-text .timeline-item.selected:hover {
+.html-text .r6o-annotation,
+.html-text .r6o-annotation:hover,
+.html-text .r6o-annotation.selected,
+.html-text .r6o-annotation.selected:hover {
   transition: all 80ms ease;
 }
 
