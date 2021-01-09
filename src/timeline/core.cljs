@@ -219,8 +219,6 @@
                                              (:hovered-year-id state))
                     years)]
 
-      ; TODO: Show this only when hovering over a timeline dot
-      ; TODO: Handle the up case (right now just handling the down)
       [:div {:class "wrapper"}
        (let [relative-to-viewport (hovered-year-relative-to-viewport state)
              arrow (case relative-to-viewport
