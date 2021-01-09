@@ -5,18 +5,23 @@
    [goog.dom :as dom]
    [timeline.utils :as utils]
    [goog.dom.classlist :as classlist]
-   [goog.fx.dom :as fx-dom])
+   [goog.fx.dom :as fx-dom]
+   [recogito :as recogito])
   (:require-macros
    [timeline.utils :refer
     [inline-resource babys-first-macro inline-json-file-as-edn]]))
 
-(def example-text (inline-resource "hopl-clojure.html"))
+(def all-example-annotations (inline-json-file-as-edn "example-annotations-2.json"))
 
-(def example-annotations (inline-json-file-as-edn "example-annotations.json"))
+(def example-annotations (first all-example-annotations))
+
+(def example-text (:cleanHtml example-annotations))
+
+(def annotations (:annotations example-annotations))
 
 (enable-console-print!)
 
-;; define your app data so that doesn't get over-written on reload
+; Define your app data so that doesn't get over-written on reload
 (defonce app-state
   (atom {:selected-year-id nil
          :hovered-year-id nil
@@ -29,7 +34,7 @@
   (int (.-innerText date-tag)))
 
 (defn get-id-from-inline-year-tag [date-tag]
-  (str (.-id date-tag)))
+  (str (.getAttribute date-tag "data-id")))
 
 (defn get-percent [y min-year max-year]
   (* 100  (divide (- y min-year) (- max-year min-year))))
@@ -58,8 +63,13 @@
         height (second width-and-height)]
     height))
 
-(defn before-or-after-viewport [element-id]
-  (let [element-offset (.-offsetTop (.getElementById js/document element-id))]
+(defn get-annotation-elem-from-data-id [year-id]
+  (.querySelector
+   js/document
+   (str "[data-id='" year-id "']")))
+
+(defn before-or-after-viewport [data-id]
+  (let [element-offset (.-offsetTop (get-annotation-elem-from-data-id data-id))]
     (cond
       (< element-offset (get-scroll-top)) :before-viewport
       (< element-offset (+ (get-scroll-top) (get-viewport-height))) :in-viewport
@@ -73,13 +83,13 @@
     (let [elems-with-selected-class (vec (array-seq (.getElementsByClassName js/document "selected")))]
       (doseq [elem elems-with-selected-class]
         (classlist/remove elem "selected")))
+
     ; Add .selected class to new selection
-    (if-let [new-selection (.getElementById js/document year-id)]
+    (let [new-selection (get-annotation-elem-from-data-id year-id)]
       (do
         (classlist/add new-selection "selected")
         (when scroll-on-click?
           (let [top-offset (- (.-offsetTop new-selection) 64)]
-            ; TODO: Only scroll when the inline element is off screen
             (.play (fx-dom/Scroll.
                     (dom/getDocumentScrollElement)
                     #js [0 (get-scroll-top)]
@@ -91,30 +101,31 @@
 
 (defn is-year-map? [y]
   (and
-   (contains-multiple? y [:id :year-number])
-   (string? (:id y))
+   (contains-multiple? y [:data-id :year-number])
+   (string? (:data-id y))
    (number? (:year-number y))))
 
-(defn render-year-fn [years selected-year-id] ; Curry the function based on entire range of years
+; Curry the function based on entire range of years
+(defn render-timeline-dots-fn [years selected-data-id hovered-data-id]
   {:pre [(every? is-year-map? years)]}
   (fn [i year]
     (let [min-year (:year-number (first years))
           max-year (:year-number (last years))
-          year-id (:id year)
+          year-id (:data-id year)
           year-number (:year-number year)
           point-id (str year-id "--point")]
       [:span
-       {:class ["point" (when (= year-id selected-year-id) "selected")] ; TODO: Consider using flexbox instead
+       {:class ["point"
+                (when (= year-id selected-data-id) "selected")
+                (when (= year-id hovered-data-id) "hovered")]
         :key point-id
-        :id point-id
+        :data-id point-id
         :on-click (click-year year-id {:scroll-on-click? true})
         :on-mouse-over #(update-hovered-year-id year-id)
         :on-mouse-out #(update-hovered-year-id nil)
         :style {:left (str (get-percent year-number min-year (+ 1 max-year)) "vw")}}
 
-       ; TODO: Clean up this logic
-       ; TODO: Handle the onclick
-       (when (= year-id selected-year-id)
+       (when (= year-id selected-data-id)
          [:div {:class "pulsating-dot"}
           [:div {:class "dot"}]
           [:div {:class "pulse"}]])])))
@@ -141,28 +152,56 @@
     new-animated-year-tag))
 
 (defn sort-years [inline-year-tags]
-  (sort-by :year-number
-           (for [year-tag inline-year-tags]
-             {:id (get-id-from-inline-year-tag year-tag)
-              :year-number (get-year-from-inline-year-tag year-tag)})))
+  (sort-by :year-number inline-year-tags))
+
+(defn keep-time-annotations [annotation bodies]
+  (keep #(if (= "time-annotation" (:purpose %))
+           {:data-id (:id annotation)
+            :year-number (.getFullYear (new js/Date (:value %)))})
+        bodies))
+
+(defn get-all-time-annotations [annotator annotations]
+  (->> annotations
+       (map
+        (fn [annotation]
+          (let [bodies (:body annotation)
+                inline-year-tags-subset (keep-time-annotations annotation bodies)]
+            (. annotator addAnnotation (clj->js annotation))
+            inline-year-tags-subset)))
+       (flatten)))
 
 (defn initialize-years [] ; Build up `years` variable and put it in the atom
-  (let [inline-year-tags (array-seq (.getElementsByClassName js/document "timeline-item"))]
+  (let [annotator (js/Recogito.init #js {:content "article-body-with-annotations"})
+        ; Not all annotations have `:purpose "time-annotation"`, so filter out
+        ; those that have a different (or nonexistent) purpose.
+        time-annotations (get-all-time-annotations annotator annotations)]
+
     ; Add `years` to the app state
-    (swap! app-state -update-years (sort-years inline-year-tags))
+    (swap! app-state -update-years (sort-years time-annotations))
+
     ; Initialize each inline date tag
-    (doseq [original-year-tag inline-year-tags]
-      ; Add on-click callback
-      (.addEventListener
-       original-year-tag "click"
-       (click-year (get-id-from-inline-year-tag original-year-tag) {:scroll-on-click? false})
-       false)
-      ; Add border animation
-      (animated-inline-year original-year-tag))))
+    (doseq [year time-annotations]
+      (let [original-year-tag (get-annotation-elem-from-data-id (:data-id year))]
+
+        (.addEventListener
+         original-year-tag "click"
+         (click-year (get-id-from-inline-year-tag original-year-tag) {:scroll-on-click? false})
+         false)
+
+        (.addEventListener
+         original-year-tag "mouseover"
+         #(update-hovered-year-id (:data-id year))
+         false)
+
+        (.addEventListener
+         original-year-tag "mouseout"
+         #(update-hovered-year-id nil)
+         false)
+
+        (animated-inline-year original-year-tag)))))
 
 (defn hovered-year-relative-to-viewport [state]
   (let [year-id (:hovered-year-id state)]
-    (babys-first-macro year-id)
     (if (nil? year-id)
       nil ; Nothing is hovered
       (before-or-after-viewport year-id))))
@@ -175,7 +214,10 @@
      [:div
       [:div {:class "timeline"}
        (render-timeline-background years)
-       (map-indexed (render-year-fn years (:selected-year-id state)) years)]
+       (map-indexed (render-timeline-dots-fn years
+                                             (:selected-year-id state)
+                                             (:hovered-year-id state))
+                    years)]
 
       ; TODO: Show this only when hovering over a timeline dot
       ; TODO: Handle the up case (right now just handling the down)
@@ -185,13 +227,16 @@
                      :before-viewport "↑"
                      :after-viewport "↓"
                      nil)]
-         (babys-first-macro relative-to-viewport)
-         (babys-first-macro arrow)
          [:div {:class "container"} [:div {:class "arrow bounce"} arrow]])
        [:div {:class "spacer"}]
-      ;;  [:pre (with-out-str (pp/pprint example-annotations))]
-       [:pre (with-out-str (pp/pprint state))]
-       [:div {:class "html-text" :dangerouslySetInnerHTML {:__html example-text}}]]
+       [:pre {:id "state"}
+        (str "Note that not all annotations in the example are dates (even if they may look like they are!)\n\n"
+             (with-out-str (pp/pprint state)))]
+       [:div {:class "html-text"
+              :id "article-body-with-annotations"
+              :dangerouslySetInnerHTML {:__html example-text}}]]
+      [:div {:class "spacer"}]
+      [:div {:class "spacer"}]
       [:div {:class "spacer"}]])))
 
 (rum/mount (hello-world) (. js/document (getElementById "app")))
