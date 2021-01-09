@@ -48,7 +48,11 @@
                ;; lein cljsbuild once min
                {:id "min"
                 :source-paths ["src"]
-                :compiler {:output-to "resources/public/js/compiled/timeline.js"
+                :compiler {:foreign-libs [{:file "resources/recogito.min.js"
+                                           :provides ["recogito"]}
+                                          {:file "resources/html-sanitizer.js"
+                                           :provides ["htmlSanitizer"]}]
+                           :output-to "resources/public/js/compiled/timeline.js"
                            :main timeline.core
                            :optimizations :advanced
                            :pretty-print false}}]}
